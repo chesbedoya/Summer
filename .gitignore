@@ -130,3 +130,4 @@ bdd/token.pickle
 bdd/features/my_screenshot_name.png
 
 .idea/
+.idea\workspace.xml
