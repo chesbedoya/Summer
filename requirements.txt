@@ -1,1 +1,15 @@
-behave
+virtualenv
+behave~=1.2.6
+bs4
+apiclient
+google-api-python-client
+psycopg2~=2.8.6
+selenium~=3.141.0
+google_auth_oauthlib
+requests~=2.25.0
+jsonpickle
+validators
+webdriver-manager
+PyMySQL
+SQLAlchemy
+webdriver_manager
