@@ -10,3 +10,10 @@ def step_impl(context, occupancy, destination, check_future_days, check_out_futu
     page = hotel_result_page(context)
     page.search_hotel(city=destination, check_future_days=check_future_days, check_out_future_days=check_out_future_days
                       , occupancy=occupancy)
+    context.current_page = page
+
+
+@Then("Esperar que la página de resultados traiga hoteles en catmandú")
+def step_impl(context):
+    context.current_page.wait_results_hotel()
+

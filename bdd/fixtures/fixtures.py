@@ -13,6 +13,9 @@ def create_base_url(context):
     if context.environment.lower() == 'preprod':
         return f"https://preprod.netactica.com"
 
+    if context.environment.lower() == 'testing':
+        return f"https://testing.netactica.com"
+
 
 def init_environment(context, **kwargs):
     context.datetime = datetime.utcnow().strftime('%Y-%m-%d %H%M%S.%f')

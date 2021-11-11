@@ -10,6 +10,10 @@ def close_browser(context):
                 context.browser.quit()
 
 
+def after_scenario(context, scenario):
+    close_browser(context)
+
+
 def before_tag(context, tag):
     if tag == "use.chrome.browser":
         use_fixture(use_chrome_browser, context)
@@ -17,9 +21,9 @@ def before_tag(context, tag):
     if tag == "close.browser":
         context.close_browser = True
 
-    if tag == "preprod.regresion.es-CO.expedia":
-        use_fixture(init_environment, context, environment='preprod', userService='regresion', language='es-CO',
-                    sucursal='nuevaex')
+    if tag == "testing.simulacion.es-CO":
+        use_fixture(init_environment, context, environment='testing', userService='simulacion', language='es-CO',
+                    sucursal=None)
 
 
 def before_all(context):
