@@ -25,6 +25,13 @@ def before_tag(context, tag):
         use_fixture(init_environment, context, environment='testing', userService='simulacion', language='es-CO',
                     sucursal=None)
 
+    if tag == "testing.palomalo.es-CO":
+        use_fixture(init_environment, context, environment='testing', userService='palomalo', language='es-CO',
+                    sucursal=None)
+
+    if tag == "testing.regresiontest.es-CO.expedia":
+        use_fixture(init_environment, context, environment='testing', userService='regresiontest', language='es-CO',
+                    sucursal='hexp')
 
 def before_all(context):
     user_data = context.config.userdata

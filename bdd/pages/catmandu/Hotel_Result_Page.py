@@ -7,6 +7,7 @@ import time
 
 
 class hotel_result_page(BasePage):
+    RETURN_HOTEL_RESULTS = 'return $HotelResults'
 
     def __init__(self, context):
         BasePage.__init__(self, context)
@@ -17,6 +18,7 @@ class hotel_result_page(BasePage):
         check_out = datetime.datetime.now() + datetime.timedelta(days=check_out_future_days)
 
         sc = None if self.context.sucursal is None else self.context.sucursal
+        print (sc)
         url = "{}/{}/Hotel/{}/{}/{}/{}/NA/{}".format(self.context.base_url,
                                                       self.context.language,
                                                       city, check_in.strftime("%Y-%m-%d"),
@@ -44,5 +46,26 @@ class hotel_result_page(BasePage):
     def wait_results_hotel(self):
         element = WebDriverWait(self.context.browser, 120).until(EC.element_to_be_clickable
                                                                  ((By.ID, "divHotelResults")))
-        self.context.hotels_result = self.context.browser.execute_script("return $HotelResults")
+        self.context.catmandu_hotel_result = self.context.browser.execute_script(self.RETURN_HOTEL_RESULTS)
         self.context.current_product = 'hotel'
+
+    def click_option_hotel(self):
+        element = WebDriverWait(self.context.browser, 120).until(EC.element_to_be_clickable
+                                                                 ((By.ID, "Hot_0_room_0_option_1"))).click()
+
+    def click_hotel_option_dinamic(self, hotelOption, roomOption):
+        self.context.selectedHotel = self.context.catmandu_hotel_result[hotelOption]
+        combined_hotel = len(self.context.selectedHotel['CombinedRoomTypeAvailability'])
+        is_combined = True if combined_hotel > 0 else False
+        if is_combined:
+            select_room_option = self.context.selectedHotel['CombinedRoomTypeAvailability'][roomOption]
+            self.context.browser.execute_script(
+                f"selectHotelOption('Hot_{hotelOption}_comb_{select_room_option['Id']}', 'bundled', false)")
+
+        else:
+            not_combined = self.context.selectedHotel['RoomTypeAvailability'][0]['RoomOptions'][roomOption]
+            hotelOption = hotelOption + 1
+            self.context.browser.execute_script(
+                f"selectHotelOption('Hot_{hotelOption}_room_{roomOption}_option_40', 'perRoom', false)")
+
+
