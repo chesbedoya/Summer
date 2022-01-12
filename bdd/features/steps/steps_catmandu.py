@@ -1,6 +1,7 @@
 import time
 from behave import *
 from bdd.pages.catmandu.Hotel_Result_Page import hotel_result_page
+from bdd.pages.catmandu.Passenger_page import Passenger_page
 
 
 @Given("Hacer búsqueda de hoteles en catmandu para ocupación {occupancy:w} para destino iata {destination:w}"
@@ -34,3 +35,15 @@ def step_impl(context,hotelOption, roomOption):
     page.click_hotel_option_dinamic(hotelOption, roomOption)
 
 
+@Then("Esperar la página de pasajeros")
+def step_impl(context):
+    context.currentPage = Passenger_page(context)
+    context.currentPage.wait_for_passenger_page()
+
+@Then("Esperar la validación de precios en página de pasajeros de catmandú")
+def step_impl(context):
+    context.currentPage.wait_until_price_validation()
+
+@Then("Llenar formulario de pasajeros")
+def step_impl(context):
+    context.currentPage.fill_passenger_information()

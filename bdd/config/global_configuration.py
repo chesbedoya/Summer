@@ -12,3 +12,6 @@ PREPROD_CONNECTION_STRING = \
     'mssql+pyodbc://netcoreusr:catmandu@172.31.42.161:1433/NetCorePre?driver=SQL+Server+Native+Client+11.0'
 
 SELENIUM_VERSION = '3.14.0'
+
+MOCKAROO_KEY = '82912180'
+MOCKAROO_URL = 'https://api.mockaroo.com/api/generate.json'

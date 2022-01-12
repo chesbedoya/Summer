@@ -63,9 +63,10 @@ class hotel_result_page(BasePage):
                 f"selectHotelOption('Hot_{hotelOption}_comb_{select_room_option['Id']}', 'bundled', false)")
 
         else:
-            not_combined = self.context.selectedHotel['RoomTypeAvailability'][0]['RoomOptions'][roomOption]
             hotelOption = hotelOption + 1
+            not_combined = self.context.catmandu_hotel_result[hotelOption]
+            not_combined_room = not_combined['RoomTypeAvailability'][0]['RoomOptions'][roomOption]
             self.context.browser.execute_script(
-                f"selectHotelOption('Hot_{hotelOption}_room_{roomOption}_option_40', 'perRoom', false)")
+                f"selectHotelOption('Hot_{hotelOption}_room_{roomOption}_option_{not_combined_room['Id']}','perRoom', false)")
 
 
