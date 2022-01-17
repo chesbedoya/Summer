@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from bdd.pages.BasePage import BasePage
 from bdd.Mockaroo.Mockaroo_request import Mockaroo_request
+import datetime
 
 
 
@@ -16,8 +17,9 @@ class Passenger_page(BasePage):
     PASSENGER_DOF = "Travelers[{index}].DOB_d"
     PASSENGER_MOB = "Travelers[{index}].DOB_m"
     PASSENGER_YOB = "Travelers[{index}].DOB_y"
-    PASSENGER_EMAIL = "ContactEmail"
-    PASSENGER_PHONE = "ContactPhone"
+    PASSENGER_EMAIL = (By.ID, "ContactEmail")
+    PASSENGER_PHONE = (By.ID, "ContactPhone")
+    PASSENGER_CHECKBOX = "chkTermsAndConditions"
 
     def __init__(self, context):
         BasePage.__init__(self, context)
@@ -41,6 +43,7 @@ class Passenger_page(BasePage):
             self.fill_passenger1r1a()
             self.fill_email(data['Email'])
             self.fill_phone(data['Phone'])
+            self.click_checkbox()
 
     def fill_passenger1r1a(self):
         self.fill_form_passenger('primary_adult', 0)
@@ -54,7 +57,7 @@ class Passenger_page(BasePage):
             self.fill_last_name(data['LastName'], passenger_number)
             self.fill_document_type(['BillingDocumentTypeNamePlaceToPay'], passenger_number)
             self.fill_document_number(self.mockaroo.get_document_passenger(), passenger_number)
-            date_object = data.datetime.datetime.strptime(data['AdultAge'], date_time_format)
+            date_object = datetime.datetime.strptime(data['AdultAge'], date_time_format)
             self.fill_birthday(date_object.day, passenger_number)
             self.fill_birthday_month(date_object.month, passenger_number)
             self.fill_birthday_year(date_object.year, passenger_number)
@@ -106,9 +109,9 @@ class Passenger_page(BasePage):
             EC.visibility_of_element_located(element)).send_keys(last_name)
 
     def fill_document_type(self, document_type, index):
-            element = (By.ID, self.PASSENGER_DOCUMENT_TYPE.replace('{index}', str(index)))
-            WebDriverWait(self.context.browser, 20).until(
-                EC.visibility_of_element_located(element)).send_keys(document_type)
+        element = (By.ID, self.PASSENGER_DOCUMENT_TYPE.replace('{index}', str(index)))
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located(element)).send_keys(document_type)
 
     def fill_document_number(self, document_number, index):
         element = (By.ID, self.PASSENGER_DOCUMENT_NUMBER.replace('{index}', str(index)))
@@ -142,3 +145,13 @@ class Passenger_page(BasePage):
         WebDriverWait(self.context.browser, 20).until(
             EC.visibility_of_element_located(
                 self.PASSENGER_PHONE)).send_keys(phone)
+
+    def click_checkbox(self):
+        WebDriverWait(self.context.browser, 20).until(
+            EC.element_to_be_clickable(
+                (By.ID, 'chkTermsAndConditions'))).click()
+
+    def click_button_continue(self):
+        WebDriverWait(self.context.browser, 20).until(
+            EC.element_to_be_clickable(
+                (By.ID, 'submitButtonId'))).click()

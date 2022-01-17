@@ -47,3 +47,7 @@ def step_impl(context):
 @Then("Llenar formulario de pasajeros")
 def step_impl(context):
     context.currentPage.fill_passenger_information()
+
+@Then("Click botón continuar en página de pasajeros")
+def step_impl(context):
+    context.currentPage.click_button_continue()

@@ -11,3 +11,6 @@ Feature: Regresion Testing Hoteles
     Then Esperar la página de pasajeros
     Then Esperar la validación de precios en página de pasajeros de catmandú
     Then Llenar formulario de pasajeros
+    Then Click botón continuar en página de pasajeros
+    Then Esperar que se muestre la página de checkout
+    Then Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
