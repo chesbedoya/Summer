@@ -11,3 +11,4 @@ def step_impl(context, payment_form):
     pay_page = Checkout(context)
     if payment_form.lower() == 'tarjeta de crédito':
         context.currentPage.click_credit_card_payment_form()
+        context.currentPage.fill_credit_card(context)

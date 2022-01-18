@@ -21,4 +21,7 @@ class Mockaroo_request:
     def get_document_passenger(self):
         return str(random.randint(1000000, 2000000))
 
+    def get_payment_data(self):
+        return self.post_request('Schema000003', '1')
+
 
