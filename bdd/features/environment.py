@@ -33,6 +33,10 @@ def before_tag(context, tag):
         use_fixture(init_environment, context, environment='testing', userService='regresiontest', language='es-CO',
                     sucursal='hexp')
 
+    if tag == "testing.regresiontest.es-CO.amadeus":
+        use_fixture(init_environment, context, environment='testing', userService='regresiontest', language='es-CO',
+                    sucursal='amadeus')
+
 def before_all(context):
     user_data = context.config.userdata
     continue_after_failed = user_data.getbool("runner.continue_after_failed_step", False)

@@ -31,3 +31,10 @@ class behave_extensions(BasePage):
             self.context.browser.switch_to.frame(iframeElement)
         except:
             raise Exception("SwitchToFrameByNumber() Hubo una excepción en el flujo")
+
+    def set_context_enviroment(self, context, enviroment):
+        if enviroment == 'testing':
+            self.context.netsuite_enviroment = {
+                'url': 'testing.netactica.com',
+                'default_language': 'es-CO'
+                                                }

@@ -45,13 +45,24 @@ class Passenger_page(BasePage):
             self.fill_phone(data['Phone'])
             self.click_checkbox()
 
+        if occupancy == '1r2a' or occupancy == '2adt':
+            self.fill_passenger1r2a()
+            self.fill_email(data['Email'])
+            self.fill_phone(data['Phone'])
+            self.click_checkbox()
+
     def fill_passenger1r1a(self):
         self.fill_form_passenger('primary_adult', 0)
+
+    def fill_passenger1r2a(self):
+        self.fill_form_passenger('primary_adult', 0)
+        self.fill_form_passenger('secondary_adult', 1)
+
 
     def fill_form_passenger(self, type_passenger, passenger_number):
         data = self.mockaroo.get_information_passenger_data()
         date_time_format = '%Y-%m-%d %H:%M:%S'
-        if type_passenger == 'primary_adult':
+        if type_passenger == 'primary_adult' or type_passenger == 'secondary_adult':
             self.fill_title(data['Title'], passenger_number)
             self.fill_name(data['FirstName'], passenger_number)
             self.fill_last_name(data['LastName'], passenger_number)
@@ -91,6 +102,8 @@ class Passenger_page(BasePage):
         if rooms == 1:
             if adults_rooms_one == 1:
                 return '1r1a'
+            elif adults_rooms_one == 2:
+                return '1r2a'
 
     def fill_title(self, title, index):
         element = (By.ID, self.PASSENGER_TITLE.replace('{index}', str(index)))

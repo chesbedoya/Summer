@@ -1,5 +1,6 @@
 from behave import *
 from bdd.pages.NFF.Checkout import Checkout
+from bdd.pages.NFF.Payment_page import Payment_page
 
 
 @Then("Esperar que se muestre la página de checkout")
@@ -14,3 +15,16 @@ def step_impl(context, payment_form):
     if payment_form.lower() == 'tarjeta de crédito':
         context.currentPage.click_credit_card_payment_form()
         context.currentPage.fill_credit_card(context)
+        context.currentPage.fill_geography_information()
+        context.currentPage.click_button_payment()
+
+@Then('Esperar y dar click en ver itinerario')
+def step_impl(context):
+    context.currentPage = Payment_page(context)
+    context.currentPage.wait_process_payment()
+    context.currentPage.wait_display_page()
+
+@Then ('Validar que la reserva tenga estado confirmado')
+def step_impl(context):
+    context.currentPage.get_status_reservation()
+

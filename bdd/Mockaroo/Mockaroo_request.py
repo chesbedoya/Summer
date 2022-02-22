@@ -24,4 +24,5 @@ class Mockaroo_request:
     def get_payment_data(self):
         return self.post_request('Schema000003', '1')
 
-
+    def get_geography_payment_data(self):
+        return self.post_request('Schema000003', '1')
