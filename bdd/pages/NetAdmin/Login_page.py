@@ -6,14 +6,13 @@ from bdd.Extensions.behave_extensions import behave_extensions
 from datetime import datetime
 import time
 
+
 class Login_page(BasePage):
 
     def __init__(self, context):
         BasePage.__init__(self, context)
 
-    def open_netadmin(self, context, enviroment):
+    def open_netadmin(self, context, environment):
         extensions = behave_extensions(self.context)
-        extensions.set_context_enviroment(self.context, enviroment)
-        self.context.browser.get(self.context.netsuite_enviroment['url'])
-        context.datetime = datetime.now()
-        time.sleep(100)
+        extensions.set_context_environment(self.context, environment)
+        self.context.browser.get(self.context.netsuite_environment['url'])

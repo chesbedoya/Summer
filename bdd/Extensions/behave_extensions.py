@@ -32,9 +32,9 @@ class behave_extensions(BasePage):
         except:
             raise Exception("SwitchToFrameByNumber() Hubo una excepción en el flujo")
 
-    def set_context_enviroment(self, context, enviroment):
-        if enviroment == 'testing':
-            self.context.netsuite_enviroment = {
-                'url': 'testing.netactica.com',
+    def set_context_environment(self, context, environment):
+        if environment == 'testing':
+            self.context.netsuite_environment = {
+                'url': 'https://testing.netactica.com/',
                 'default_language': 'es-CO'
-                                                }
+            }
