@@ -5,7 +5,7 @@ Feature: Regresion Testing Hoteles
   @use.chrome.browser
   @testing.regresiontest.es-CO.expedia
     Scenario: Flujo ExpediaRapid 1r1a
-   Given Hacer búsqueda de hoteles en catmandu para ocupación 1R1A para destino iata MIA con fecha de checkin en 113 días y checkout en 115 días
+   Given Hacer búsqueda de hoteles en catmandu para ocupación 1R1A para destino iata MIA con fecha de checkin en 115 días y checkout en 120 días
     Then Esperar que la página de resultados traiga hoteles en catmandú
     Then Seleccionar la opción 1 del hotel 1 de la página de resultados de catmandú
     Then Esperar la página de pasajeros
@@ -17,6 +17,12 @@ Feature: Regresion Testing Hoteles
     Then Esperar y dar click en ver itinerario
     Then Validar que la reserva tenga estado confirmado
     Then Ingresar a netadmin ambiente testing
+    Then Esperar que se muestre página de login de netadmin
+    Then Ingresar credenciales de login ambiente testing
+    Then Hacer click en el boton ingresar
+    Then Ingresar itinerario en el buscador
+    Then Hacer click en el boton search
+    Then Hacer click en el boton cancelar
 
 
   @use.chrome.browser

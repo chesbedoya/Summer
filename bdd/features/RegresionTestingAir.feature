@@ -18,3 +18,11 @@ Feature: Regresion Testing Aéreos
    Then Esperar que se muestre la página de checkout
    Then Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
    Then Esperar y dar click en ver itinerario
+   Then Validar que la reserva tenga estado confirmado
+   Then Ingresar a netadmin ambiente testing
+   Then Esperar que se muestre página de login de netadmin
+   Then Ingresar credenciales de login ambiente testing
+   Then Hacer click en el boton ingresar
+   Then Ingresar itinerario en el buscador
+   Then Hacer click en el boton search
+   Then Hacer click en el boton cancelar
