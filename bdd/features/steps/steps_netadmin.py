@@ -1,8 +1,8 @@
 from behave import *
-from selenium.webdriver.support.ui import WebDriverWait
-import time
 from bdd.pages.NetAdmin.Login_page import Login_page
 from bdd.pages.NetAdmin.Netadmin_page import Netadmin_page
+from bdd.Extensions.behave_extensions import behave_extensions
+
 
 @Then('Ingresar a netadmin ambiente {enviroment:w}')
 def step_imp(context, enviroment):
@@ -41,5 +41,9 @@ def step_imp(context):
 
 @Then('Hacer click en el boton cancelar')
 def step_imp(context):
-    context.current_page.wait_button_comments()
-    context.current_page.wait_button_cancel_itinerary()
+    page = Netadmin_page(context)
+    ext = behave_extensions(context)
+    ext.iframe_tab_netadmin()
+    ext.iframe_display()
+    page.wait_button_comments()
+    #context.current_page.wait_button_cancel_itinerary()

@@ -38,3 +38,18 @@ class behave_extensions(BasePage):
                 'url': 'https://testing.netactica.com/',
                 'default_language': 'es-CO'
             }
+
+    def iframe_tab_netadmin(self, iframe_id='iframeTab_0'):
+        try:
+            iframeElement = self.context.browser.find_element_by_id(iframe_id)
+            self.context.browser.switch_to.frame(iframeElement)
+        except:
+            raise Exception("iframe not found")
+
+    def iframe_display(self, iframe_id='ctl00_FlowIFrame'):
+        try:
+            iframeElement = self.context.browser.find_element_by_id(iframe_id)
+            self.context.browser.switch_to.frame(iframeElement)
+        except:
+            raise Exception("iframe not found")
+
