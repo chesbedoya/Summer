@@ -33,7 +33,6 @@ class Login_page(BasePage):
 
     def click_button_login(self):
         element = WebDriverWait(self.context.browser, 40).until(EC.element_to_be_clickable
-                                                      ((By.XPATH, "//div[@id='Options']/input[@id='Login_btnLogin']")))
-
+                                                                ((By.XPATH, "//div[@id='Options']/input[@id='Login_btnLogin']")))
         element.click()
 

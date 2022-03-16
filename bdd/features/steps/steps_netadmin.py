@@ -2,6 +2,7 @@ from behave import *
 from bdd.pages.NetAdmin.Login_page import Login_page
 from bdd.pages.NetAdmin.Netadmin_page import Netadmin_page
 from bdd.Extensions.behave_extensions import behave_extensions
+import time
 
 
 @Then('Ingresar a netadmin ambiente {enviroment:w}')
@@ -27,16 +28,19 @@ def step_imp(context):
     context.current_page.click_button_login()
 
 
-@Then('Ingresar itinerario en el buscador')
+@Then('Esperar que la pagina de Netadmin cargue')
+def step_imp(context):
+    page = Netadmin_page(context)
+    context.current_page = page
+    page.wait_loading_netadmin()
+    page.wait_page_netadmin()
+
+
+@Then('Ingresar itinerario y buscarlo en Netadmin')
 def step_imp(context):
     page = Netadmin_page(context)
     context.current_page = page
     context.current_page.insert_itinerary_number_in_netadmin()
-
-
-@Then('Hacer click en el boton search')
-def step_imp(context):
-    context.current_page.click_button_search()
 
 
 @Then('Hacer click en el boton cancelar')
