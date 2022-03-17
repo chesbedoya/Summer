@@ -59,14 +59,26 @@ class Netadmin_page(BasePage):
         except Exception as e:
             print('Not loading display' + str(e))
 
+    def wait_button_cancel_itinerary(self):
+        WebDriverWait(self.context.browser, 60).until(
+            EC.visibility_of_element_located(self.NETFARE_CANCEL_RESERVATION)).click()
+        alert = self.context.browser.switch_to.alert
+        alert.accept()
+
+    def cancel_message_itinerary(self):
+        try:
+            WebDriverWait(self.context.browser, 20) \
+                .until(EC.presence_of_element_located(self.NETFARE_MESSAGE_NOTIFICATION_CANCEL_ITINERARY))
+
+            WebDriverWait(self.context.browser, 20) \
+                .until_not(EC.presence_of_element_located(self.NETFARE_MESSAGE_NOTIFICATION_CANCEL_ITINERARY))
+
+        except TimeoutException:
+            pass
+
     def wait_button_comments(self):
         WebDriverWait(self.context.browser, 80).until(
             EC.element_to_be_clickable((By.ID, self.NFF_WAIT_ITINERARY)))
 
-    def wait_button_cancel_itinerary(self):
-        WebDriverWait(self.context.browser, 30).until(EC.element_to_be_clickable
-                                                      ((By.CSS_SELECTOR, "[id$=_btnCancelItinerary]"))).click()
-        alert = self.context.browser.switch_to.alert
-        alert.accept()
 
 
