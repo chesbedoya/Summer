@@ -1,3 +1,4 @@
+from selenium.common.exceptions import TimeoutException
 from bdd.pages.BasePage import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,6 +13,7 @@ class Netadmin_page(BasePage):
 
     NETFARE_ONE_MOMENT_MESSAGE = (By.ID, "ctl00_lblLoadingPage")
     NETFARE_RESERVATION_BUTTON = (By.ID, "ctl00_ContentPlaceHolder1_MainMenuControl_btnCreateItinerary")
+    NETFARE_MESSAGE_NOTIFICATION_CANCEL_ITINERARY = (By.ID, "divNotify")
     NFF_WAIT_ITINERARY = "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_RemarkControl_btnAdd"
     NETFARE_INPUT_ITINERARY = (By.ID, "ctl00_ContentPlaceHolder1_txtSearch")
 
