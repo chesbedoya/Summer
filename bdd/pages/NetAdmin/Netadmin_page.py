@@ -5,16 +5,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-import time
 
 
 class Netadmin_page(BasePage):
 
     NETFARE_ONE_MOMENT_MESSAGE = (By.ID, "ctl00_lblLoadingPage")
     NETFARE_RESERVATION_BUTTON = (By.ID, "ctl00_ContentPlaceHolder1_MainMenuControl_btnCreateItinerary")
+    NETFARE_CANCEL_RESERVATION = (By.ID, "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_btnCancelItinerary")
     NETFARE_MESSAGE_NOTIFICATION_CANCEL_ITINERARY = (By.ID, "divNotify")
-    NFF_WAIT_ITINERARY = "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_RemarkControl_btnAdd"
+    NFF_WAIT_ITINERARY = (By.ID, "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_RemarkControl_btnAdd")
     NETFARE_INPUT_ITINERARY = (By.ID, "ctl00_ContentPlaceHolder1_txtSearch")
 
     def __init__(self, context):
@@ -78,9 +77,16 @@ class Netadmin_page(BasePage):
         except TimeoutException:
             pass
 
+    def validation_cancel_itinerary(self):
+        WebDriverWait(self.context.browser, 60) \
+            .until(EC.visibility_of_element_located((By.XPATH, "//*[@id='ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl02_lblStatus']")))
+        set_state = self.context.browser.find_elements(By.XPATH, "//*[@id='ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl02_lblStatus']")
+        state = set_state[0].text
+        assert state in "Cancelado"
+
     def wait_button_comments(self):
         WebDriverWait(self.context.browser, 80).until(
-            EC.element_to_be_clickable((By.ID, self.NFF_WAIT_ITINERARY)))
+            EC.element_to_be_clickable(self.NFF_WAIT_ITINERARY))
 
 
 

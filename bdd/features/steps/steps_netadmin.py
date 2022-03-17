@@ -51,5 +51,6 @@ def step_imp(context):
     ext.iframe_tab_netadmin()
     ext.iframe_display()
     context.current_page.wait_button_cancel_itinerary()
-    context.current_page.cancel_message_itinerary
+    context.current_page.cancel_message_itinerary()
+    context.current_page.validation_cancel_itinerary()
     page.wait_button_comments()

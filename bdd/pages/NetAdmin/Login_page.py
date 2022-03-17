@@ -26,7 +26,7 @@ class Login_page(BasePage):
                                                       ((By.ID, "Login_UserName"))).send_keys('admin')
 
         WebDriverWait(self.context.browser, 40).until(EC.element_to_be_clickable
-                                                      ((By.ID, "Login_Password"))).send_keys('mrbean')
+                                                      ((By.ID, "Login_Password"))).send_keys('Cald4s')
 
         WebDriverWait(self.context.browser, 40).until(EC.element_to_be_clickable
                                                       ((By.ID, "Login_UserService"))).send_keys('regresiontest')
