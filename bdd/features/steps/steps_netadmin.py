@@ -41,6 +41,7 @@ def step_imp(context):
     page = Netadmin_page(context)
     context.current_page = page
     context.current_page.insert_itinerary_number_in_netadmin()
+    context.current_page.wait_loading_itinerary()
 
 
 @Then('Hacer click en el boton cancelar')

@@ -4,6 +4,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+import time
 
 
 class Netadmin_page(BasePage):
@@ -11,6 +13,7 @@ class Netadmin_page(BasePage):
     NETFARE_ONE_MOMENT_MESSAGE = (By.ID, "ctl00_lblLoadingPage")
     NETFARE_RESERVATION_BUTTON = (By.ID, "ctl00_ContentPlaceHolder1_MainMenuControl_btnCreateItinerary")
     NFF_WAIT_ITINERARY = "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_RemarkControl_btnAdd"
+    NETFARE_INPUT_ITINERARY = (By.ID, "ctl00_ContentPlaceHolder1_txtSearch")
 
     def __init__(self, context):
         BasePage.__init__(self, context)
@@ -32,13 +35,29 @@ class Netadmin_page(BasePage):
 
     def insert_itinerary_number_in_netadmin(self):
         try:
-            WebDriverWait(self.context.browser, 40).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, "[id$=_txtSearch]")))
-            element = self.context.browser.find_element_by_css_selector('[id$=_txtSearch]')
-            element.send_keys(self.context.itinerary_number, Keys.ENTER)
-            webdriver.ActionChains(self.context.browser).send_keys(Keys.ESCAPE).perform()
-        except:
-            print("I do not enter the itinerary")
+            element = WebDriverWait(self.context.browser, 40).until(
+                EC.element_to_be_clickable(self.NETFARE_INPUT_ITINERARY))
+            available = element.is_enabled()
+            if available:
+                element.send_keys(self.context.itinerary_number, Keys.ESCAPE)
+                webdriver.ActionChains(self.context.browser).send_keys(Keys.TAB).perform()
+                webdriver.ActionChains(self.context.browser).send_keys(Keys.ENTER).perform()
+            else:
+                print("No ingreso el itinerario")
+        except Exception as e:
+            print('Not Itinerary' + str(e))
+
+    def wait_loading_itinerary(self):
+        try:
+            while True:
+                WebDriverWait(self.context.browser, 60).until(
+                    EC.element_to_be_clickable((By.XPATH, "//td[@class='tab-text']")))
+                element = self.context.browser.find_elements_by_xpath("//td[@class='tab-text']")
+                var = element[0].text
+                if var != 'Cargando' and var != 'Nueva Pestaña':
+                    break
+        except Exception as e:
+            print('Not loading display' + str(e))
 
     def wait_button_comments(self):
         WebDriverWait(self.context.browser, 80).until(
