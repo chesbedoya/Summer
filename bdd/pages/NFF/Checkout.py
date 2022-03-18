@@ -35,19 +35,6 @@ class Checkout(BasePage):
         WebDriverWait(self.context.browser, 120).until(
             EC.element_to_be_clickable(self.payment_button))
 
-    def obteined_checkout_price(self):
-        checkout_price = self.context.browser.find_elements_by_id(
-                "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl05_lblTotalAmount")
-        price_result_checkout =checkout_price[0].text
-        price_result_checkout_replace = price_result_checkout.replace("COP ", "").replace(".", "")
-        price_checkout_float_results = float(price_result_checkout_replace)
-        self.context.checkout_price_validation = price_checkout_float_results
-
-    def validation_price_checkout(self):
-        assert self.context.passenger_price_validation == self.context.checkout_price_validation
-
-
-
     def click_credit_card_payment_form(self):
         WebDriverWait(self.context.browser, 60).until(
             EC.element_to_be_clickable(self.click_button_tdc)).click()

@@ -44,7 +44,7 @@ def step_imp(context):
     context.current_page.wait_loading_itinerary()
 
 
-@Then('Hacer click en el boton cancelar y validar que el estado quede en cancelado')
+@Then('Hacer click en el boton cancelar')
 def step_imp(context):
     page = Netadmin_page(context)
     ext = behave_extensions(context)

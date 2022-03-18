@@ -52,20 +52,9 @@ class hotel_result_page(BasePage):
         self.context.catmandu_hotel_result = self.context.browser.execute_script(self.RETURN_HOTEL_RESULTS)
         self.context.current_product = 'hotel'
 
-    def delete_filter_hoteles(self):
-        WebDriverWait(self.context.browser, 60) \
-            .until(EC.visibility_of_element_located((By.XPATH, "//span[@class='nts-tag']/a[@class='nts-tag-remove']"))).click()
-
     def click_option_hotel(self):
         element = WebDriverWait(self.context.browser, 120).until(EC.element_to_be_clickable
                                                                  ((By.ID, "Hot_0_room_0_option_1"))).click()
-
-    def obteined_hotel_price(self):
-        hotel_price = self.context.browser.find_elements_by_xpath("//div[@class='reprice']//div[@class='price-extra money']//span[@class='currencyText']")
-        price_result_hotel = hotel_price[0].text
-        price_result_hotel_replace = price_result_hotel.replace("$ ", "").replace(".", "")
-        price_hotel_float_results = float(price_result_hotel_replace)
-        self.context.hotel_price_options = price_hotel_float_results
 
     def click_hotel_option_dinamic(self, hotelOption, roomOption):
         self.context.selectedHotel = self.context.catmandu_hotel_result[hotelOption]
@@ -74,10 +63,10 @@ class hotel_result_page(BasePage):
         if is_combined:
             select_room_option = self.context.selectedHotel['CombinedRoomTypeAvailability'][roomOption]
             self.context.browser.execute_script(
-                f"selectHotelOption('Hot_{hotelOption}_room_{select_room_option['Id']}', 'bundled', false)")
-
+                f"selectHotelOption('Hot_{hotelOption}_comb_{select_room_option['Id']}', 'bundled', false)")
 
         else:
+            hotelOption = hotelOption + 1
             not_combined = self.context.catmandu_hotel_result[hotelOption]
             not_combined_room = not_combined['RoomTypeAvailability'][0]['RoomOptions'][roomOption]
             self.context.browser.execute_script(
