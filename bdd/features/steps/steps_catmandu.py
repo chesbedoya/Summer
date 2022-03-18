@@ -21,6 +21,9 @@ def step_impl(context, occupancy, destination, check_future_days, check_out_futu
 def step_impl(context):
     context.current_page.wait_results_hotel()
 
+@Then("Quitar filtro de solo hoteles con imagenes")
+def step_impl(context):
+    context.current_page.delete_filter_hoteles()
 
 @Then("Seleccionar la primera opción de hotel")
 def step_impl(context):
@@ -34,7 +37,9 @@ def step_impl(context,hotelOption, roomOption):
     if roomOption >= 1:
         roomOption = roomOption-1
 
+
     page = hotel_result_page(context)
+    page.obteined_hotel_price()
     page.click_hotel_option_dinamic(hotelOption, roomOption)
 
 
@@ -47,9 +52,18 @@ def step_impl(context):
 def step_impl(context):
     context.currentPage.wait_until_price_validation()
 
+
 @Then("Llenar formulario de pasajeros")
 def step_impl(context):
+    context.currentPage.obteined_passenger_price()
+    context.currentPage.validation_price_passenger()
     context.currentPage.fill_passenger_information()
+
+@Then("Validar que el precio en la pagina de hoteles sea el mismo precio que en pagina de pasajeros")
+def step_impl(context):
+    context.currentPage.obteined_passenger_price()
+    context.currentPage.validation_price_passenger()
+
 
 @Then("Click botón continuar en página de pasajeros")
 def step_impl(context):
