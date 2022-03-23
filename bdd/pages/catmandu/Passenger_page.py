@@ -60,12 +60,23 @@ class Passenger_page(BasePage):
             self.fill_phone(data['Phone'])
             self.click_checkbox()
 
+        if occupancy == '1r2a1c':
+            self.fill_passenger1r2a1c()
+            self.fill_email(data['Email'])
+            self.fill_phone(data['Phone'])
+            self.click_checkbox()
+
     def fill_passenger1r1a(self):
         self.fill_form_passenger('primary_adult', 0)
 
     def fill_passenger1r2a(self):
         self.fill_form_passenger('primary_adult', 0)
         self.fill_form_passenger('secondary_adult', 1)
+
+    def fill_passenger1r2a1c(self):
+        self.fill_form_passenger('primary_adult', 0)
+        self.fill_form_passenger('secondary_adult', 1)
+        self.fill_form_passenger('primary_children', 2)
 
 
     def fill_form_passenger(self, type_passenger, passenger_number):
@@ -81,6 +92,18 @@ class Passenger_page(BasePage):
             self.fill_birthday(date_object.day, passenger_number)
             self.fill_birthday_month(date_object.month, passenger_number)
             self.fill_birthday_year(date_object.year, passenger_number)
+
+        elif type_passenger == 'primary_children':
+            self.fill_title(data['Title'], passenger_number)
+            self.fill_name(data['FirstName'], passenger_number)
+            self.fill_last_name(data['LastName'], passenger_number)
+            self.fill_document_type(['BillingDocumentTypeNamePlaceToPay'], passenger_number)
+            self.fill_document_number(self.mockaroo.get_document_passenger(), passenger_number)
+            date_object = datetime.datetime.strptime(data['ChildAge8'], date_time_format)
+            self.fill_birthday(date_object.day, passenger_number)
+            self.fill_birthday_month(date_object.month, passenger_number)
+            self.fill_birthday_year(date_object.year, passenger_number)
+
 
     def get_occupancy_model(self):
         search_json = self.context.browser.execute_script('return $searchData')
@@ -99,20 +122,28 @@ class Passenger_page(BasePage):
         else:
             rooms = search_json['Rooms']
             adults_rooms_one = 0
+            children_rooms_one = 0
             if len(rooms) == 1:
                 guests = search_json['Rooms'][0]['Guests']
                 for i in guests:
                     if i['Type'] == 0:
                         adults_rooms_one = adults_rooms_one + 1
-            occupancy = self.make_occupancy(len(rooms), adults_rooms_one)
+                    elif i['Type'] == 1:
+                        children_rooms_one = children_rooms_one + 1
+
+            occupancy = self.make_occupancy(len(rooms), adults_rooms_one, children_rooms_one)
             return occupancy
 
-    def make_occupancy(self, rooms, adults_rooms_one):
+    def make_occupancy(self, rooms, adults_rooms_one, children_rooms_one):
         if rooms == 1:
             if adults_rooms_one == 1:
                 return '1r1a'
+            elif adults_rooms_one == 2 and children_rooms_one == 1:
+                return '1r2a1c'
             elif adults_rooms_one == 2:
                 return '1r2a'
+
+
 
     def fill_title(self, title, index):
         element = (By.ID, self.PASSENGER_TITLE.replace('{index}', str(index)))
