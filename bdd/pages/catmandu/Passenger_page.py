@@ -1,3 +1,4 @@
+import re
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -20,6 +21,14 @@ class Passenger_page(BasePage):
     PASSENGER_EMAIL = (By.ID, "ContactEmail")
     PASSENGER_PHONE = (By.ID, "ContactPhone")
     PASSENGER_CHECKBOX = "chkTermsAndConditions"
+    EXTRA_TRAVELER_TITLE = "ExtraReservationItems_0__Travelers_0__Title"
+    EXTRA_TRAVELER_NAME = "ExtraReservationItems_0__Travelers_0__FirstName"
+    EXTRA_TRAVELER_LAST_NAME = "ExtraReservationItems_0__Travelers_0__LastName"
+    EXTRA_TRAVELER_DOCUMENT_TYPE = "ExtraReservationItems_0__Travelers_0__DocumentType"
+    EXTRA_TRAVELER_DOCUMENT = "ExtraReservationItems_0__Travelers_0__DucumentNumber"
+    EXTRA_TRAVELER_DOB_D = "ExtraReservationItems[0].Travelers[0].DOB_d"
+    EXTRA_TRAVELER_DOB_M = "ExtraReservationItems[0].Travelers[0].DOB_m"
+    EXTRA_TRAVELER_DOB_Y = "ExtraReservationItems[0].Travelers[0].DOB_y"
 
     def __init__(self, context):
         BasePage.__init__(self, context)
@@ -45,6 +54,9 @@ class Passenger_page(BasePage):
     def validation_price_passenger(self):
         assert self.context.hotel_price_options == self.context.passenger_price_validation
 
+    def validation_extra_price_passenger(self):
+        assert self.context.extras_price_options == self.context.passenger_price_validation
+
     def fill_passenger_information(self):
         occupancy = self.get_occupancy_model()
         data = self.mockaroo.get_information_passenger_data()
@@ -54,17 +66,24 @@ class Passenger_page(BasePage):
             self.fill_phone(data['Phone'])
             self.click_checkbox()
 
-        if occupancy == '1r2a' or occupancy == '2adt':
+        elif occupancy == '1r2a' or occupancy == '2adt':
             self.fill_passenger1r2a()
             self.fill_email(data['Email'])
             self.fill_phone(data['Phone'])
             self.click_checkbox()
 
-        if occupancy == '1r2a1c':
+        elif occupancy == '1r2a1c':
             self.fill_passenger1r2a1c()
             self.fill_email(data['Email'])
             self.fill_phone(data['Phone'])
             self.click_checkbox()
+
+        elif occupancy == '1re':
+            self.fill_traveler()
+            self.fill_email(data['Email'])
+            self.fill_phone(data['Phone'])
+            self.click_checkbox()
+
 
     def fill_passenger1r1a(self):
         self.fill_form_passenger('primary_adult', 0)
@@ -77,6 +96,9 @@ class Passenger_page(BasePage):
         self.fill_form_passenger('primary_adult', 0)
         self.fill_form_passenger('secondary_adult', 1)
         self.fill_form_passenger('primary_children', 2)
+
+    def fill_traveler(self):
+        self.fill_form_passenger('traveler', 0)
 
 
     def fill_form_passenger(self, type_passenger, passenger_number):
@@ -105,6 +127,18 @@ class Passenger_page(BasePage):
             self.fill_birthday_year(date_object.year, passenger_number)
 
 
+        elif type_passenger == 'traveler':
+            self.fill_extra_traveler_title(data['Title'])
+            self.fill_extra_traveler_name(data['FirstName'])
+            self.fill_extra_traveler_last_name(data['LastName'])
+            self.fill_extra_traveler_document_type(data['BillingDocumentTypeNamePlaceToPay'])
+            self.fill_extra_traveler_document_number(self.mockaroo.get_document_passenger())
+            date_object = datetime.datetime.strptime(data['AdultAge'], date_time_format)
+            self.fill_extra_traveler_birth_day(date_object.day)
+            self.fill_extra_traveler_birth_month(date_object.month)
+            self.fill_extra_traveler_birth_year(date_object.year)
+
+
     def get_occupancy_model(self):
         search_json = self.context.browser.execute_script('return $searchData')
         if hasattr(self.context, 'current_product') and self.context.current_product != 'hotel':
@@ -119,6 +153,12 @@ class Passenger_page(BasePage):
                     if quantity_air_passenger == 1 and passenger_type == 0:
                         air_occupancy = '1adt'
                         return "{}".format(air_occupancy)
+
+            elif self.context.current_product == 'extra':
+                if self.context.ocupation_extra == '1re':
+                    self.context.ocupation = '1re'
+                return self.context.ocupation
+
         else:
             rooms = search_json['Rooms']
             adults_rooms_one = 0
@@ -142,7 +182,6 @@ class Passenger_page(BasePage):
                 return '1r2a1c'
             elif adults_rooms_one == 2:
                 return '1r2a'
-
 
 
     def fill_title(self, title, index):
@@ -208,3 +247,49 @@ class Passenger_page(BasePage):
         WebDriverWait(self.context.browser, 20).until(
             EC.element_to_be_clickable(
                 (By.ID, 'submitButtonId'))).click()
+
+
+    def fill_extra_traveler_title(self, title):
+        by = (By.ID, self.EXTRA_TRAVELER_TITLE)
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located((By.XPATH, f"//*[@id='ExtraReservationItems_0__Travelers_0__Title']/option[text()='{title}']"))).click()
+
+    def fill_extra_traveler_name(self, name):
+        by = (By.ID, self.EXTRA_TRAVELER_NAME)
+        name = re.sub(r"[^\w.@-]", "", name)
+        #name = name.replace("'", "") if "'" in name else name
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located(by)).send_keys(name)
+
+    def fill_extra_traveler_last_name(self, last_name):
+        by = (By.ID, self.EXTRA_TRAVELER_LAST_NAME)
+        last_name = re.sub(r"[^\w.@-]", "", last_name)
+        #last_name = last_name.replace("'", "") if "'" in last_name else last_name
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located(by)).send_keys(last_name)
+
+    def fill_extra_traveler_document_type(self, type_document):
+        by = (By.ID, self.EXTRA_TRAVELER_DOCUMENT_TYPE)
+        WebDriverWait(self.context.browser, 30).until(
+            EC.visibility_of_element_located(by)).send_keys(type_document)
+
+    def fill_extra_traveler_document_number(self, document):
+        by = (By.ID, self.EXTRA_TRAVELER_DOCUMENT)
+        WebDriverWait(self.context.browser, 30).until(
+            EC.visibility_of_element_located(by)).send_keys(document)
+
+    def fill_extra_traveler_birth_day(self, day):
+        by = (By.ID, self.EXTRA_TRAVELER_DOB_D)
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located((By.XPATH, f"//*[@id='ExtraReservationItems[0].Travelers[0].DOB_d']/option[text()='{day}']"))).click()
+
+    def fill_extra_traveler_birth_month(self, month):
+        by = (By.ID, self.EXTRA_TRAVELER_DOB_M)
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located((By.XPATH, f"//*[@id='ExtraReservationItems[0].Travelers[0].DOB_m']/option[text()='{month}']"))).click()
+
+    def fill_extra_traveler_birth_year(self, year):
+        by = (By.ID, self.EXTRA_TRAVELER_DOB_Y)
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located((By.XPATH, f"//*[@id='ExtraReservationItems[0].Travelers[0].DOB_y']/option[text()='{year}']"))).click()
+

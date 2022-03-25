@@ -32,3 +32,4 @@ def step_impl(context):
 def step_impl(context):
     context.currentPage.get_status_reservation()
 
+
