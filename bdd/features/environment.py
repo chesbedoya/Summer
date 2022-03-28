@@ -49,17 +49,13 @@ def before_tag(context, tag):
         use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
                     sucursal="civitatis")
 
-    if tag == "testing.regresiontest.es-CO.rentingp2p":
+    if tag == "testing.regresiontest.es-CO.RentingCarz":
         use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="rentingp2p")
+                    sucursal="rentingcar")
 
     if tag == "testing.regresiontest.es-CO.localiza":
         use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
                     sucursal="localiza")
-
-    if tag == "testing.regresiontest.es-CO.Movida":
-        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="movida")
 
 def before_all(context):
     user_data = context.config.userdata

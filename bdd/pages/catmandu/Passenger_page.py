@@ -29,6 +29,14 @@ class Passenger_page(BasePage):
     EXTRA_TRAVELER_DOB_D = "ExtraReservationItems[0].Travelers[0].DOB_d"
     EXTRA_TRAVELER_DOB_M = "ExtraReservationItems[0].Travelers[0].DOB_m"
     EXTRA_TRAVELER_DOB_Y = "ExtraReservationItems[0].Travelers[0].DOB_y"
+    DRIVER_TITLE = "Driver_Title"
+    DRIVER_NAME = "Driver_FirstName"
+    DRIVER_LAST_NAME = "Driver_LastName"
+    DRIVER_DOCUMENT_TYPE = "Driver_DocumentType"
+    DRIVER_DOCUMENT = "Driver_DucumentNumber"
+    DRIVER_DOB_D = "Driver.DOB_d"
+    DRIVER_DOB_M = "Driver.DOB_m"
+    DRIVER_DOB_Y = "Driver.DOB_y"
 
     def __init__(self, context):
         BasePage.__init__(self, context)
@@ -45,6 +53,13 @@ class Passenger_page(BasePage):
             if not element.is_displayed():
                 return
     def obteined_passenger_price(self):
+        passenger_price = self.context.browser.find_elements_by_xpath("//div[@id='headerTotal']//span[@class='currencyText']")
+        price_result_passenger = passenger_price[0].text
+        price_result_passenger_replace = price_result_passenger.replace("$ ", "").replace(".", "")
+        price_passenger_float_results = float(price_result_passenger_replace)
+        self.context.passenger_price_validation = price_passenger_float_results
+
+    def obteined_passenger_car_price(self):
         passenger_price = self.context.browser.find_elements_by_xpath("//div[@class='small-8 column text-right bold']//span[@class='nts-totalizer nts-big-total']//span[@class='currencyText']")
         price_result_passenger = passenger_price[0].text
         price_result_passenger_replace = price_result_passenger.replace("$ ", "").replace(".", "")
@@ -56,6 +71,9 @@ class Passenger_page(BasePage):
 
     def validation_extra_price_passenger(self):
         assert self.context.extras_price_options == self.context.passenger_price_validation
+
+    def validation_car_price_passenger(self):
+        assert self.context.car_price_options == self.context.passenger_price_validation
 
     def fill_passenger_information(self):
         occupancy = self.get_occupancy_model()
@@ -84,6 +102,12 @@ class Passenger_page(BasePage):
             self.fill_phone(data['Phone'])
             self.click_checkbox()
 
+        elif occupancy == '1drv':
+            self.fill_driver()
+            self.fill_email(data['Email'])
+            self.fill_phone(data['Phone'])
+            self.click_checkbox()
+
 
     def fill_passenger1r1a(self):
         self.fill_form_passenger('primary_adult', 0)
@@ -99,6 +123,9 @@ class Passenger_page(BasePage):
 
     def fill_traveler(self):
         self.fill_form_passenger('traveler', 0)
+
+    def fill_driver(self):
+        self.fill_form_passenger('driver', 0)
 
 
     def fill_form_passenger(self, type_passenger, passenger_number):
@@ -138,6 +165,17 @@ class Passenger_page(BasePage):
             self.fill_extra_traveler_birth_month(date_object.month)
             self.fill_extra_traveler_birth_year(date_object.year)
 
+        elif type_passenger == 'driver':
+            self.fill_driver_title(data['Title'])
+            self.fill_driver_name(data['FirstName'])
+            self.fill_driver_last_name(data['LastName'])
+            self.fill_driver_document_number(data['BillingDocumentTypeNamePlaceToPay'])
+            self.fill_driver_document_type(self.mockaroo.get_document_passenger())
+            date_object = datetime.datetime.strptime(data['AdultAge'], date_time_format)
+            self.fill_driver_birth_day(date_object.day)
+            self.fill_driver_birth_month(date_object.month)
+            self.fill_driver_birth_year(date_object.year)
+
 
     def get_occupancy_model(self):
         search_json = self.context.browser.execute_script('return $searchData')
@@ -158,6 +196,9 @@ class Passenger_page(BasePage):
                 if self.context.ocupation_extra == '1re':
                     self.context.ocupation = '1re'
                 return self.context.ocupation
+
+            elif self.context.current_product == 'car':
+                return "1drv"
 
         else:
             rooms = search_json['Rooms']
@@ -293,3 +334,46 @@ class Passenger_page(BasePage):
         WebDriverWait(self.context.browser, 20).until(
             EC.visibility_of_element_located((By.XPATH, f"//*[@id='ExtraReservationItems[0].Travelers[0].DOB_y']/option[text()='{year}']"))).click()
 
+    def fill_driver_title(self, title):
+        by = (By.ID, self.DRIVER_TITLE)
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located((By.XPATH, f"//*[@id='Driver_Title']/option[text()='{title}']"))).click()
+
+    def fill_driver_name(self, name):
+        by = (By.ID, self.DRIVER_NAME)
+        name = re.sub(r"[^\w.@-]", "", name)
+        #name = name.replace("'", "") if "'" in name else name
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located(by)).send_keys(name)
+
+    def fill_driver_last_name(self, last_name):
+        by = (By.ID, self.DRIVER_LAST_NAME)
+        last_name = re.sub(r"[^\w.@-]", "", last_name)
+        #last_name = last_name.replace("'", "") if "'" in last_name else last_name
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located(by)).send_keys(last_name)
+
+    def fill_driver_document_number(self, document):
+        by = (By.ID, self.DRIVER_DOCUMENT_TYPE)
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located(by)).send_keys(document)
+
+    def fill_driver_document_type(self, type_document):
+        by = (By.ID, self.DRIVER_DOCUMENT)
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located(by)).send_keys(type_document)
+
+    def fill_driver_birth_day(self, day):
+        by = (By.ID, self.DRIVER_DOB_D)
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located((By.XPATH, f"//*[@id='Driver.DOB_d']/option[text()='{day}']"))).click()
+
+    def fill_driver_birth_month(self, month):
+        by = (By.ID, self.DRIVER_DOB_M)
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located((By.XPATH, f"//*[@id='Driver.DOB_m']/option[text()='{month}']"))).click()
+
+    def fill_driver_birth_year(self, year):
+        by = (By.ID, self.DRIVER_DOB_Y)
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located((By.XPATH, f"//*[@id='Driver.DOB_y']/option[text()='{year}']"))).click()
