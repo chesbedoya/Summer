@@ -59,6 +59,11 @@ class hotel_result_page(BasePage):
         element = WebDriverWait(self.context.browser, 120).until(EC.element_to_be_clickable
                                                                  ((By.ID, "Hot_0_room_0_option_1"))).click()
 
+    def delete_filter_hoteles(self):
+        WebDriverWait(self.context.browser, 60) \
+            .until(
+            EC.visibility_of_element_located((By.XPATH, "//span[@class='nts-tag']/a[@class='nts-tag-remove']"))).click()
+
     def click_hotel_option_dinamic(self, hotelOption, roomOption):
         self.context.selectedHotel = self.context.catmandu_hotel_result[hotelOption]
         combined_hotel = len(self.context.selectedHotel['CombinedRoomTypeAvailability'])
