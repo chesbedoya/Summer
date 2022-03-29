@@ -225,7 +225,6 @@ class Passenger_page(BasePage):
             elif adults_rooms_one == 2:
                 return '1r2a'
 
-
     def fill_title(self, title, index):
         element = (By.ID, self.PASSENGER_TITLE.replace('{index}', str(index)))
         WebDriverWait(self.context.browser, 20).until(
