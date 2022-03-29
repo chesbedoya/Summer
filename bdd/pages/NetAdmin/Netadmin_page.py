@@ -78,19 +78,11 @@ class Netadmin_page(BasePage):
             pass
 
     def validation_cancel_itinerary(self):
-        WebDriverWait(self.context.browser, 60) \
-<<<<<<< HEAD
-            .until(EC.visibility_of_element_located((By.XPATH, "//*[@id='ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl02_lblStatus']")))
-        set_state = self.context.browser.find_elements(By.XPATH, "//*[@id='ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl02_lblStatus']")
-        state = set_state[0].text
-        assert state in "Cancelado"
-=======
-            .until(EC.visibility_of_element_located((By.XPATH, "//div[@class='status']/span[@class='Cancelled']")))
+        WebDriverWait(self.context.browser, 60).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='status']/span[@class='Cancelled']")))
         state = self.context.browser.find_elements(By.XPATH, "//div[@class='status']/span[@class='Cancelled']")
         set_state = state[0].text
         assert_state = ['Cancelado', 'Cancelado Offline']
         assert set_state in assert_state
->>>>>>> victorino
 
     def wait_button_comments(self):
         WebDriverWait(self.context.browser, 80).until(
