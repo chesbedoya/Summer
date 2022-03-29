@@ -16,6 +16,8 @@ def step_impl(context, payment_form):
         context.currentPage.fill_credit_card(context)
         context.currentPage.fill_geography_information()
         context.currentPage.click_button_payment()
+
+
 @Then("Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout")
 def step_impl(context):
     context.currentPage.obteined_checkout_price()
@@ -27,6 +29,7 @@ def step_impl(context):
     context.currentPage = Payment_page(context)
     context.currentPage.wait_process_payment()
     context.currentPage.wait_display_page()
+
 
 @Then ('Validar que la reserva tenga estado confirmado')
 def step_impl(context):

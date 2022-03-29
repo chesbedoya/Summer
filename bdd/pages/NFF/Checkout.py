@@ -46,8 +46,6 @@ class Checkout(BasePage):
     def validation_price_checkout(self):
         assert self.context.passenger_price_validation == self.context.checkout_price_validation
 
-
-
     def click_credit_card_payment_form(self):
         WebDriverWait(self.context.browser, 60).until(
             EC.element_to_be_clickable(self.click_button_tdc)).click()
