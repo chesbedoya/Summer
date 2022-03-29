@@ -7,7 +7,6 @@ from bdd.Mockaroo.Mockaroo_request import Mockaroo_request
 import datetime
 
 
-
 class Passenger_page(BasePage):
     PASSENGER_TITLE = "Travelers_{index}__Title"
     PASSENGER_NAME = "Travelers_{index}__FirstName"
@@ -37,6 +36,7 @@ class Passenger_page(BasePage):
     DRIVER_DOB_D = "Driver.DOB_d"
     DRIVER_DOB_M = "Driver.DOB_m"
     DRIVER_DOB_Y = "Driver.DOB_y"
+    SEATMAP_BUTTON = (By.ID, 'submitSeatMap')
 
     def __init__(self, context):
         BasePage.__init__(self, context)
@@ -52,10 +52,9 @@ class Passenger_page(BasePage):
                                                        ((By.ID, "message")))
             if not element.is_displayed():
                 return
-<<<<<<< HEAD
-=======
+
     def obteined_passenger_price(self):
-        passenger_price = self.context.browser.find_elements_by_xpath("//div[@id='headerTotal']//span[@class='currencyText']")
+        passenger_price = self.context.browser.find_elements_by_xpath("//span[@class='nts-totalizer nts-big-total']//span[@class='currencyText']")
         price_result_passenger = passenger_price[0].text
         price_result_passenger_replace = price_result_passenger.replace("$ ", "").replace(".", "")
         price_passenger_float_results = float(price_result_passenger_replace)
@@ -70,7 +69,6 @@ class Passenger_page(BasePage):
 
     def validation_price_passenger(self):
         assert self.context.hotel_price_options == self.context.passenger_price_validation
->>>>>>> victorino
 
     def validation_extra_price_passenger(self):
         assert self.context.extras_price_options == self.context.passenger_price_validation
@@ -129,7 +127,6 @@ class Passenger_page(BasePage):
 
     def fill_driver(self):
         self.fill_form_passenger('driver', 0)
-
 
     def fill_form_passenger(self, type_passenger, passenger_number):
         data = self.mockaroo.get_information_passenger_data()
@@ -286,6 +283,10 @@ class Passenger_page(BasePage):
         WebDriverWait(self.context.browser, 20).until(
             EC.element_to_be_clickable(
                 (By.ID, 'chkTermsAndConditions'))).click()
+
+    def ClickOnSeatMapButton(self):
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located(self.SEATMAP_BUTTON)).click()
 
     def click_button_continue(self):
         WebDriverWait(self.context.browser, 20).until(

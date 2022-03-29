@@ -62,6 +62,10 @@ class extras_result_page(BasePage):
         except TimeoutError:
             print("No se esta efectuando la espera")
 
+    def wait_extra_results_crosselling(self):
+        element = WebDriverWait(self.context.browser, 120) \
+            .until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "hotel-image")))
+
     def wait_product_view(self):
         WebDriverWait(self.context.browser, 120).until(EC.visibility_of_element_located((By.ID, 'btnPurchase_1')))
 
