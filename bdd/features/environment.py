@@ -37,6 +37,26 @@ def before_tag(context, tag):
         use_fixture(init_environment, context, environment='testing', userService='regresiontest', language='es-CO',
                     sucursal='amadeus')
 
+    if tag == "testing.regresiontest.es-CO.ApitudeExt":
+        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
+                    sucursal="apitude_ex")
+
+    if tag == "testing.regresiontest.es-CO.Omnitours":
+        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
+                    sucursal="omnitours")
+
+    if tag == "testing.regresiontest.es-CO.Civitatis":
+        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
+                    sucursal="civitatis")
+
+    if tag == "testing.regresiontest.es-CO.RentingCarz":
+        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
+                    sucursal="rentingcar")
+
+    if tag == "testing.regresiontest.es-CO.localiza":
+        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
+                    sucursal="localiza")
+
 def before_all(context):
     user_data = context.config.userdata
     continue_after_failed = user_data.getbool("runner.continue_after_failed_step", False)

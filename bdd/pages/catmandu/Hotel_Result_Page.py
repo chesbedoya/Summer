@@ -43,6 +43,9 @@ class hotel_result_page(BasePage):
 
         elif occupancy == '1r2a':
             occupancy = '2$0'
+
+        elif occupancy == '1r2a1c':
+            occupancy = '2-8$0'
         self.context.occupancy = occupancy
         return occupancy
 
