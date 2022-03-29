@@ -37,6 +37,7 @@ class Passenger_page(BasePage):
     DRIVER_DOB_D = "Driver.DOB_d"
     DRIVER_DOB_M = "Driver.DOB_m"
     DRIVER_DOB_Y = "Driver.DOB_y"
+    SEATMAP_BUTTON = (By.ID, 'submitSeatMap')
 
     def __init__(self, context):
         BasePage.__init__(self, context)
@@ -53,7 +54,7 @@ class Passenger_page(BasePage):
             if not element.is_displayed():
                 return
     def obteined_passenger_price(self):
-        passenger_price = self.context.browser.find_elements_by_xpath("//div[@id='headerTotal']//span[@class='currencyText']")
+        passenger_price = self.context.browser.find_elements_by_xpath("//span[@class='nts-totalizer nts-big-total']//span[@class='currencyText']")
         price_result_passenger = passenger_price[0].text
         price_result_passenger_replace = price_result_passenger.replace("$ ", "").replace(".", "")
         price_passenger_float_results = float(price_result_passenger_replace)
@@ -283,6 +284,10 @@ class Passenger_page(BasePage):
         WebDriverWait(self.context.browser, 20).until(
             EC.element_to_be_clickable(
                 (By.ID, 'chkTermsAndConditions'))).click()
+
+    def ClickOnSeatMapButton(self):
+        WebDriverWait(self.context.browser, 20).until(
+            EC.visibility_of_element_located(self.SEATMAP_BUTTON)).click()
 
     def click_button_continue(self):
         WebDriverWait(self.context.browser, 20).until(

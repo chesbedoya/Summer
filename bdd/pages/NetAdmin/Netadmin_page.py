@@ -82,7 +82,8 @@ class Netadmin_page(BasePage):
             .until(EC.visibility_of_element_located((By.XPATH, "//div[@class='status']/span[@class='Cancelled']")))
         state = self.context.browser.find_elements(By.XPATH, "//div[@class='status']/span[@class='Cancelled']")
         set_state = state[0].text
-        assert set_state in "Cancelado"
+        assert_state = ['Cancelado', 'Cancelado Offline']
+        assert set_state in assert_state
 
     def wait_button_comments(self):
         WebDriverWait(self.context.browser, 80).until(
