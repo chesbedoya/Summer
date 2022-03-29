@@ -80,4 +80,11 @@ class hotel_result_page(BasePage):
             self.context.browser.execute_script(
                 f"selectHotelOption('Hot_{hotelOption}_room_{roomOption}_option_{not_combined_room['Id']}','perRoom', false)")
 
+    def obteined_hotel_price(self):
+        hotel_price = self.context.browser.find_elements_by_xpath("//div[@class='price-extra money']//span[@class='currencyText']")
+        price_result_hotel = hotel_price[0].text
+        price_result_hotel_replace = price_result_hotel.replace("$ ", "").replace(".", "")
+        price_hotel_float_results = float(price_result_hotel_replace)
+        self.context.hotel_price_validation = price_hotel_float_results
+        return self.context.hotel_price_validation
 

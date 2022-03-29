@@ -39,6 +39,7 @@ def step_impl(context, hotelOption, roomOption):
     if roomOption >= 1:
         roomOption = roomOption-1
     page = hotel_result_page(context)
+    page.obteined_hotel_price()
     page.click_hotel_option_dinamic(hotelOption, roomOption)
 
 
@@ -62,6 +63,9 @@ def step_impl(context):
 def step_impl(context):
     context.currentPage.obteined_passenger_price()
     context.currentPage.validation_price_passenger()
+
+    context.currentPage.obteined_passenger_price()
+    context.currentPage.validation_extra_price_passenger()
 
 
 @Then("Click botón continuar en página de pasajeros")
