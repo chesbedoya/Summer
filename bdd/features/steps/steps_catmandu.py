@@ -27,7 +27,6 @@ def step_impl(context):
 def step_impl(context):
     context.current_page.delete_filter_hoteles()
 
-
 @Then("Seleccionar la primera opción de hotel")
 def step_impl(context):
     context.current_page.click_option_hotel()
@@ -39,7 +38,6 @@ def step_impl(context, hotelOption, roomOption):
         hotelOption = hotelOption - 1
     if roomOption >= 1:
         roomOption = roomOption-1
-
     page = hotel_result_page(context)
     page.click_hotel_option_dinamic(hotelOption, roomOption)
 
@@ -54,6 +52,7 @@ def step_impl(context):
 def step_impl(context):
     context.currentPage.wait_until_price_validation()
 
+
 @Then("Llenar formulario de pasajeros")
 def step_impl(context):
     context.currentPage.fill_passenger_information()
@@ -63,7 +62,6 @@ def step_impl(context):
 def step_impl(context):
     context.currentPage.obteined_passenger_price()
     context.currentPage.validation_price_passenger()
-
 
 
 @Then("Click botón continuar en página de pasajeros")
@@ -205,7 +203,7 @@ def step_impl(context):
 
 @then("Llenar formulario de conductor en la página de pasajeros de catmandú")
 def step_impl(context):
-    context.currentPage.obteined_passenger_car_price()
+    context.currentPage.obteined_passenger_price()
     context.currentPage.fill_passenger_information()
 
 
