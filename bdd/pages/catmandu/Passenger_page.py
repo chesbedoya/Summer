@@ -8,7 +8,6 @@ import datetime
 
 
 class Passenger_page(BasePage):
-    Print("esto es de jessica")
     PASSENGER_TITLE = "Travelers_{index}__Title"
     PASSENGER_NAME = "Travelers_{index}__FirstName"
     PASSENGER_LAST_NAME = "Travelers_{index}__LastName"
@@ -40,12 +39,10 @@ class Passenger_page(BasePage):
     SEATMAP_BUTTON = (By.ID, 'submitSeatMap')
 
     def __init__(self, context):
-        Print("esto es de jessica")
         BasePage.__init__(self, context)
         self.mockaroo = Mockaroo_request()
 
     def wait_for_passenger_page(self):
-        Print("esto es de jessica")
         WebDriverWait(self.context.browser, 120).until(EC.element_to_be_clickable
                                                        ((By.ID, "ContactEmail")))
 
