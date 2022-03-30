@@ -58,8 +58,13 @@ def step_impl(context):
 def step_impl(context):
     context.currentPage.fill_passenger_information()
 
+@Then("Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de air")
+def step_impl(context):
+    context.currentPage.obteined_passenger_price()
+    context.currentPage.validation_air_price_passenger()
 
-@When("Validar que el precio en la pagina de hoteles sea el mismo precio que en pagina de pasajeros")
+
+@Then("Validar que el precio en la pagina de hoteles sea el mismo precio que en pagina de pasajeros")
 def step_impl(context):
     context.currentPage.obteined_passenger_price()
     context.currentPage.validation_price_passenger()
@@ -70,12 +75,13 @@ def step_impl(context):
     context.currentPage.click_button_continue()
 
 
-@Given(
-    'Hacer búsqueda de aéreo en catmandu {trip_type:w} con la aerolinea {airline_code:w} para ocupación {passenger_combination:w} saliendo desde {city_from:w} con destino {city_to:w} con fecha de salida en {departure_future_days:d} días')
-def step_impl(context, trip_type, airline_code, passenger_combination, city_from, city_to, departure_future_days):
+@Given('Hacer búsqueda de aéreo en catmandu {airTripType:w} con la aerolinea {airLineCode:w} para ocupación {passengersCombination:w} saliendo desde {airCityFrom:w} con destino {airCityTo:w} con fecha de salida en {airDepartureFutureDays:d} días')
+def step_impl(context, airTripType, airLineCode, passengersCombination, airCityFrom, airCityTo, airDepartureFutureDays):
+
     page = air_result_page(context)
-    page.search_air(trip_type=trip_type, airline_code=airline_code, passenger_combination=passenger_combination,
-                    city_from=city_from, city_to=city_to, departure_future_days=departure_future_days)
+    page.search_air(airTripType=airTripType, passengersCombination=passengersCombination, airCityFrom=airCityFrom,
+                    airCityTo=airCityTo, airDepartureFutureDays=airDepartureFutureDays,airReturnFutureDays=None,
+                    airLineCode=airLineCode)
     context.current_page = page
 
 
@@ -101,6 +107,9 @@ def step_impl(context, upsell_option):
     upsell_option = upsell_option.lower()
     if upsell_option == "mas costosa":
         context.currentPage.choose_max_price_upsell_option()
+        page = air_details(context)
+        page.obteined_air_price()
+
 
 
 @When("Click en botón seguir")
@@ -222,7 +231,7 @@ def step_impl(context):
     context.currentPage.fill_passenger_information()
 
 
-@When("Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras")
+@Then("Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras")
 def step_impl(context):
     context.currentPage.obteined_passenger_price()
     context.currentPage.validation_extra_price_passenger()
@@ -272,7 +281,7 @@ def step_impl(context):
 
 
 
-@When("Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de car")
+@Then("Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de car")
 def step_impl(context):
     context.currentPage.validation_car_price_passenger()
 

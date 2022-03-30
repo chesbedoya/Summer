@@ -17,15 +17,16 @@ Feature: Regresion Testing Aéreos
    When Click botón continuar en página de pasajeros
    When Esperar que se muestre la página de checkout
    When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
+   #Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
    When Esperar y dar click en ver itinerario
-   When Validar que la reserva tenga estado confirmado
+   Then Validar que la reserva tenga estado confirmado
    When Ingresar a netadmin ambiente testing
    When Esperar que se muestre página de login de netadmin
    When Ingresar credenciales de login ambiente testing
    When Hacer click en el boton ingresar
-   When Ingresar itinerario en el buscador
-   When Hacer click en el boton search
-   When Hacer click en el boton cancelar
+   When Esperar que la pagina de Netadmin cargue
+   When Ingresar itinerario y buscarlo en Netadmin
+   When Hacer click en el boton cancelar y validar que el estado quede en cancelado
 
 
   @use.chrome.browser
@@ -43,19 +44,20 @@ Feature: Regresion Testing Aéreos
    When Esperar la página de pasajeros
    When Esperar la validación de precios en página de pasajeros de catmandú
    When Llenar formulario de pasajeros
-#    When Validar que el valor total de pagina de resultados sea igual al valor total de pagina de pasajeros
+   Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de air
    #When Dar click en el botón seleccionar sillas en la página de pasajeros de catmandú
    #When Esperar hasta que se muestre el mapa de sillas en la página de selección de sillas de catmandú
-#    When Seleccionar sillas disponibles en la página de selección de sillas de catmandú
-#    When Dar click en el botón de confirmar sillas en la página de selección de sillas de catmandú
-#    When Esperar 2 segundos
-#    When Dar click en el botón de confirmar precios en la página de selección de sillas de catmandú
-#    When Esperar a que se muestre la pagina de pagos de NFF
+   #When Seleccionar sillas disponibles en la página de selección de sillas de catmandú
+   #When Dar click en el botón de confirmar sillas en la página de selección de sillas de catmandú
+   #When Esperar 2 segundos
+   #When Dar click en el botón de confirmar precios en la página de selección de sillas de catmandú
+   #When Esperar a que se muestre la pagina de pagos de NFF
    When Click botón continuar en página de pasajeros
    When Esperar que se muestre la página de checkout
    When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
+   Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
    When Esperar y dar click en ver itinerario
-   When Validar que la reserva tenga estado confirmado
+   Then Validar que la reserva tenga estado confirmado
    When Ingresar a netadmin ambiente testing
    When Esperar que se muestre página de login de netadmin
    When Ingresar credenciales de login ambiente testing

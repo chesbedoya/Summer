@@ -15,7 +15,7 @@ Feature: Regresion Testing Hoteles
     When Esperar que se muestre la página de checkout
     When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
     When Esperar y dar click en ver itinerario
-    When Validar que la reserva tenga estado confirmado
+    Then Validar que la reserva tenga estado confirmado
     When Ingresar a netadmin ambiente testing
     When Esperar que se muestre página de login de netadmin
     When Ingresar credenciales de login ambiente testing
@@ -37,13 +37,13 @@ Feature: Regresion Testing Hoteles
     When Esperar la página de pasajeros
     When Esperar la validación de precios en página de pasajeros de catmandú
     When Llenar formulario de pasajeros
-    When Validar que el precio en la pagina de hoteles sea el mismo precio que en pagina de pasajeros
+    Then Validar que el precio en la pagina de hoteles sea el mismo precio que en pagina de pasajeros
     When Click botón continuar en página de pasajeros
     When Esperar que se muestre la página de checkout
     When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
-    When Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
+    Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
     When Esperar y dar click en ver itinerario
-    When Validar que la reserva tenga estado confirmado
+    Then Validar que la reserva tenga estado confirmado
     When Ingresar a netadmin ambiente testing
     When Esperar que se muestre página de login de netadmin
     When Ingresar credenciales de login ambiente testing

@@ -5,13 +5,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from bdd.pages.BasePage import BasePage
 import time
 
+
 class air_details(BasePage):
     RETURN_TO_AIR_OPTIONS_LINK = (By.ID, "rowTop")
 
-
     def __init__(self, context):
         BasePage.__init__(self, context)
-
 
     def wait_results_upsell(self):
         element = WebDriverWait(self.context.browser, 120).until(EC.element_to_be_clickable
@@ -21,7 +20,6 @@ class air_details(BasePage):
         tabId = self.context.browser.execute_script('return $tabId')
         self.context.catmandu_air_result_page_air_options_list = self.context.browser.execute_script(
             f"PostAirDetails('/Air/Details/{tabId}/{uniqueId}', '{uniqueId}')")
-
 
     def click_onFlight_option_with_upsell_enabled(self):
         self.context.catmandu_air_result_page_air_options_list = self.context.browser.execute_script(
@@ -60,9 +58,15 @@ class air_details(BasePage):
                 self.context.browser.execute_script(f"SelectBySector('{i}', null)")
             index = index + 1
 
+    def obteined_air_price(self):
+        WebDriverWait(self.context.browser, 120) \
+            .until(EC.visibility_of_element_located((By.XPATH, "//div[@class='money']//span[@class='currencyText']")))
+        air_price = self.context.browser.find_elements_by_xpath("//div[@class='money']//span[@class='currencyText']")
+        price_result_air = air_price[0].text
+        price_result_air_replace = price_result_air.replace("$ ", "").replace(".", "")
+        price_air_float_results = float(price_result_air_replace)
+        self.context.air_price_options = price_air_float_results
+        return self.context.air_price_options
+
     def click_button_upsell_continue(self):
         self.context.browser.execute_script(f"SetOptionsAndContinue()")
-
-
-
-

@@ -11,13 +11,13 @@ Feature: RegresiónTest Extras
     When Hacer click en el boton comprar ahora de la pagina de productos de extras de catmandu
     When Esperar a que se muestre la pagina de pasajeros en catmandú
     When Llenar formulario de pasajero de extras en la página de pasajeros de catmandú
-    When Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras
+    Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras
     When Dar click en el botón continuar en la página de pasajeros de catmandú
     When Esperar que se muestre la página de checkout
     When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
-    When Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
+    Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
     When Esperar y dar click en ver itinerario
-    When Validar que la reserva tenga estado confirmado
+    Then Validar que la reserva tenga estado confirmado
     When Ingresar a netadmin ambiente testing
     When Esperar que se muestre página de login de netadmin
     When Ingresar credenciales de login ambiente testing
@@ -38,13 +38,13 @@ Feature: RegresiónTest Extras
     When Hacer click en el boton comprar ahora de la pagina de productos de extras de catmandu
     When Esperar a que se muestre la pagina de pasajeros en catmandú
     When Llenar formulario de pasajero de extras en la página de pasajeros de catmandú
-    When Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras
+    Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras
     When Dar click en el botón continuar en la página de pasajeros de catmandú
     When Esperar que se muestre la página de checkout
     When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
-    When Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
+    Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
     When Esperar y dar click en ver itinerario
-    When Validar que la reserva tenga estado confirmado
+    Then Validar que la reserva tenga estado confirmado
     When Ingresar a netadmin ambiente testing
     When Esperar que se muestre página de login de netadmin
     When Ingresar credenciales de login ambiente testing
@@ -65,13 +65,13 @@ Feature: RegresiónTest Extras
     When Hacer click en el boton comprar ahora de la pagina de productos de extras de catmandu
     When Esperar a que se muestre la pagina de pasajeros en catmandú
     When Llenar formulario de pasajero de extras en la página de pasajeros de catmandú
-    When Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras
+    Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras
     When Dar click en el botón continuar en la página de pasajeros de catmandú
     When Esperar que se muestre la página de checkout
     When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
-    When Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
+    Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
     When Esperar y dar click en ver itinerario
-    When Validar que la reserva tenga estado confirmado
+    Then Validar que la reserva tenga estado confirmado
     When Ingresar a netadmin ambiente testing
     When Esperar que se muestre página de login de netadmin
     When Ingresar credenciales de login ambiente testing

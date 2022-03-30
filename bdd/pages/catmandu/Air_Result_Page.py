@@ -22,7 +22,7 @@ class air_result_page(BasePage):
         if airTripType.lower() == "ow" and returnDate is None:
             url = "{}/{}/Air/{}/{}/{}/{}/{}/NA/{}/NA/NA/NA/false/false/{}-" \
                 .format(self.context.base_url,
-                        self.context.Language,
+                        self.context.language,
                         airTripType,
                         airCityFrom,
                         airCityTo,

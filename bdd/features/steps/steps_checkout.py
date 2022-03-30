@@ -19,7 +19,7 @@ def step_impl(context, payment_form):
         context.currentPage.click_button_payment()
 
 
-@When("Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout")
+@Then("Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout")
 def step_impl(context):
     context.currentPage.obteined_checkout_price()
     context.currentPage.validation_price_checkout()
@@ -32,7 +32,7 @@ def step_impl(context):
     context.currentPage.wait_display_page()
 
 
-@When ('Validar que la reserva tenga estado confirmado')
+@Then('Validar que la reserva tenga estado confirmado')
 def step_impl(context):
     context.currentPage.get_status_reservation()
 

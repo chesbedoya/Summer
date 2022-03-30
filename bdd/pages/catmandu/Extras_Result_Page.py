@@ -41,11 +41,14 @@ class extras_result_page(BasePage):
 
 
     def obteined_extras_price(self):
+        WebDriverWait(self.context.browser, 120) \
+            .until(EC.visibility_of_element_located((By.XPATH,"//div[@class='reprice header']//div[@class='currencyText price-extra money']//span[@class='currencyText']")))
         extras_price = self.context.browser.find_elements_by_xpath("//div[@class='reprice header']//div[@class='currencyText price-extra money']//span[@class='currencyText']")
         price_result_extras = extras_price[0].text
         price_result_extras_replace = price_result_extras.replace("$ ", "").replace(".", "")
         price_extras_float_results = float(price_result_extras_replace)
         self.context.extras_price_options = price_extras_float_results
+        return self.context.extras_price_options
 
     def select_option_extra(self, option):
         option = option - 1

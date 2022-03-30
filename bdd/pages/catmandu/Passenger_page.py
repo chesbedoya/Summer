@@ -63,13 +63,6 @@ class Passenger_page(BasePage):
         self.context.passenger_price_validation = price_passenger_float_results
         return self.context.passenger_price_validation
 
-    def obteined_passenger_car_price(self):
-        passenger_price = self.context.browser.find_elements_by_xpath("//div[@class='small-8 column text-right bold']//span[@class='nts-totalizer nts-big-total']//span[@class='currencyText']")
-        price_result_passenger = passenger_price[0].text
-        price_result_passenger_replace = price_result_passenger.replace("$ ", "").replace(".", "")
-        price_passenger_float_results = float(price_result_passenger_replace)
-        self.context.passenger_price_validation = price_passenger_float_results
-
     def validation_price_passenger(self):
         assert self.context.price_obtained_in_hotel_result_page == self.context.passenger_price_validation
 
@@ -78,6 +71,9 @@ class Passenger_page(BasePage):
 
     def validation_car_price_passenger(self):
         assert self.context.car_price_options == self.context.passenger_price_validation
+
+    def validation_air_price_passenger(self):
+        assert self.context.air_price_options == self.context.passenger_price_validation
 
     def fill_passenger_information(self):
         occupancy = self.get_occupancy_model()
