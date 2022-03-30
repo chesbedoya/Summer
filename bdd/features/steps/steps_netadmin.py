@@ -5,30 +5,30 @@ from bdd.Extensions.behave_extensions import behave_extensions
 import time
 
 
-@Then('Ingresar a netadmin ambiente {enviroment:w}')
+@When('Ingresar a netadmin ambiente {enviroment:w}')
 def step_imp(context, enviroment):
     page = Login_page(context)
     page.open_netadmin(context, enviroment)
     context.current_page = page
 
 
-@Then('Esperar que se muestre página de login de netadmin')
+@When('Esperar que se muestre página de login de netadmin')
 def step_imp(context):
     context.current_page.wait_netadmin_page()
 
 
-@Then('Ingresar credenciales de login ambiente {enviroment:w}')
+@When('Ingresar credenciales de login ambiente {enviroment:w}')
 def step_imp(context, enviroment):
     if enviroment == 'testing':
         context.current_page.insert_credentials()
 
 
-@Then('Hacer click en el boton ingresar')
+@When('Hacer click en el boton ingresar')
 def step_imp(context):
     context.current_page.click_button_login()
 
 
-@Then('Esperar que la pagina de Netadmin cargue')
+@When('Esperar que la pagina de Netadmin cargue')
 def step_imp(context):
     page = Netadmin_page(context)
     context.current_page = page
@@ -36,7 +36,7 @@ def step_imp(context):
     page.wait_page_netadmin()
 
 
-@Then('Ingresar itinerario y buscarlo en Netadmin')
+@When('Ingresar itinerario y buscarlo en Netadmin')
 def step_imp(context):
     page = Netadmin_page(context)
     context.current_page = page
