@@ -12,26 +12,45 @@ class air_result_page(BasePage):
     def __init__(self, context):
         BasePage.__init__(self, context)
 
-    def search_air(self, trip_type, airline_code, passenger_combination, city_from, city_to, departure_future_days):
-        combination = self.translate_combination(passenger_combination)
-        departure_future = datetime.datetime.now() + datetime.timedelta(days=departure_future_days)
-
-        sc = None if self.context.sucursal is None else self.context.sucursal
-
-        if trip_type.lower() == 'ow':
-            url = "{}/{}/Air/{}/{}/{}/{}/{}/NA/{}/NA/NA/NA/false/false/{}-".format(self.context.base_url,
-                                                                      self.context.language,
-                                                                      trip_type, city_from, city_to,
-                                                                      departure_future.strftime("%Y-%m-%d"),
-                                                                      combination,
-                                                                      'NA' if airline_code is None else airline_code,
-                                                                      self.context.userservice)
+    def search_air(self, airTripType, passengersCombination, airCityFrom, airCityTo, airDepartureFutureDays,
+                     airReturnFutureDays, airLineCode):
+        occupancy = self.translate_combination(passengersCombination)
+        departureDate = datetime.datetime.now() + datetime.timedelta(days=airDepartureFutureDays)
+        returnDate = None if airReturnFutureDays is None else datetime.datetime.now() + \
+                                                              datetime.timedelta(days=airReturnFutureDays)
+        suc = None if self.context.sucursal is None else self.context.sucursal
+        if airTripType.lower() == "ow" and returnDate is None:
+            url = "{}/{}/Air/{}/{}/{}/{}/{}/NA/{}/NA/NA/NA/false/false/{}-" \
+                .format(self.context.base_url,
+                        self.context.Language,
+                        airTripType,
+                        airCityFrom,
+                        airCityTo,
+                        departureDate.strftime("%Y-%m-%d"),
+                        occupancy,
+                        "NA" if airLineCode is None else airLineCode,
+                        self.context.userservice
+                        )
+        elif airTripType.lower() == "rt" and returnDate:
+            url = "{}/{}/Air/{}/{}/{}/{}/{}/{}/NA/{}/NA/NA/NA/false/false/{}-" \
+                .format(self.context.base_url,
+                        self.context.language,
+                        airTripType,
+                        airCityFrom,
+                        airCityTo,
+                        departureDate.strftime("%Y-%m-%d"),
+                        returnDate.strftime("%Y-%m-%d"),
+                        occupancy,
+                        "NA" if airLineCode is None else airLineCode,
+                        self.context.userservice
+                        )
         else:
-            print('falta implementar RT')
+            raise NotImplementedError(u'air trip type is not implemented..... falta implementar esta parte del código')
 
-        link = url if sc is None else f"{url}-{sc}"
-        self.context.browser.get(link)
-        #time.sleep(10000)
+        url = url if suc is None else f"{url}-{suc}"
+        self.context.url_search = url
+        self.context.air_return_date_change = returnDate
+        self.context.browser.get(url)
 
     def translate_combination(self, occupancy):
         """Traduce el occupancy ingresado para que lo entienda la url

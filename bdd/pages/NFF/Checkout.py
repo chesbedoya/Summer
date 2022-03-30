@@ -33,6 +33,9 @@ class Checkout(BasePage):
             EC.element_to_be_clickable(self.payment_button))
 
     def obteined_checkout_price(self):
+        WebDriverWait(self.context.browser, 30) \
+            .until(EC.presence_of_element_located((By.ID, "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl05_lblTotalAmount")))
+
         checkout_price = self.context.browser.find_elements_by_id(
                 "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl05_lblTotalAmount")
         price_result_checkout =checkout_price[0].text

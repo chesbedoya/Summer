@@ -54,6 +54,8 @@ class Passenger_page(BasePage):
                 return
 
     def obteined_passenger_price(self):
+        WebDriverWait(self.context.browser, 120).until(EC.visibility_of_element_located
+                                                       ((By.XPATH, "//span[@class='nts-totalizer nts-big-total']//span[@class='currencyText']")))
         passenger_price = self.context.browser.find_elements_by_xpath("//span[@class='nts-totalizer nts-big-total']//span[@class='currencyText']")
         price_result_passenger = passenger_price[0].text
         price_result_passenger_replace = price_result_passenger.replace("$ ", "").replace(".", "")
@@ -69,7 +71,7 @@ class Passenger_page(BasePage):
         self.context.passenger_price_validation = price_passenger_float_results
 
     def validation_price_passenger(self):
-        assert self.context.hotel_price_options == self.context.passenger_price_validation
+        assert self.context.price_obtained_in_hotel_result_page == self.context.passenger_price_validation
 
     def validation_extra_price_passenger(self):
         assert self.context.extras_price_options == self.context.passenger_price_validation
