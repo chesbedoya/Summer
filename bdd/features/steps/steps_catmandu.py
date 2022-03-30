@@ -39,7 +39,7 @@ def step_impl(context, hotelOption, roomOption):
     if roomOption >= 1:
         roomOption = roomOption-1
     page = hotel_result_page(context)
-    page.obteined_hotel_price()
+    page.obtained_hotel_price(context, hotelOption, roomOption)
     page.click_hotel_option_dinamic(hotelOption, roomOption)
 
 

@@ -35,6 +35,6 @@ class Payment_page(BasePage):
         print(view_status)
         for i in range(len(view_status)):
             get_status = view_status[i].text
-            status = ['Emitido','Confirmada']
+            status = ['Emitido', 'Confirmada']
             assert get_status in status
 

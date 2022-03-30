@@ -65,26 +65,59 @@ class hotel_result_page(BasePage):
             EC.visibility_of_element_located((By.XPATH, "//span[@class='nts-tag']/a[@class='nts-tag-remove']"))).click()
 
     def click_hotel_option_dinamic(self, hotelOption, roomOption):
-        self.context.selectedHotel = self.context.catmandu_hotel_result[hotelOption]
-        combined_hotel = len(self.context.selectedHotel['CombinedRoomTypeAvailability'])
-        is_combined = True if combined_hotel > 0 else False
-        if is_combined:
-            select_room_option = self.context.selectedHotel['CombinedRoomTypeAvailability'][roomOption]
+        """
+        Selecting a room being a hotel bundled and not bundled
+        :param hotelIndex: dynamic hotel value int
+        :param roomIndex: dynamic room value int
+        :return
+        """
+        hotel_result = self.context.browser.execute_script(self.RETURN_HOTEL_RESULTS)
+        assert len(hotel_result) > 0
+        selected_hotel = hotel_result[hotelOption]
+        combined_hotel = len(selected_hotel['CombinedRoomTypeAvailability'])
+        is_combined_hotel = True if combined_hotel > 0 else False
+        number_hotel = selected_hotel['UniqueID']
+        if is_combined_hotel:
+            assert len(selected_hotel['CombinedRoomTypeAvailability']) > 0
+            selected_room = selected_hotel['CombinedRoomTypeAvailability'][roomOption]
+            validate_refundable = selected_hotel['CombinedRoomTypeAvailability'][roomOption]['RefundableType']
+            assert validate_refundable == 0
             self.context.browser.execute_script(
-                f"selectHotelOption('Hot_{hotelOption}_comb_{select_room_option['Id']}', 'bundled', false)")
-
+                f"selectHotelOption('{number_hotel}_comb_{selected_room['Id']}', 'bundled', false)")
         else:
-            hotelOption = hotelOption + 1
-            not_combined = self.context.catmandu_hotel_result[hotelOption]
-            not_combined_room = not_combined['RoomTypeAvailability'][0]['RoomOptions'][roomOption]
+            assert len(selected_hotel['RoomTypeAvailability']) > 0
+            selected_room_option = selected_hotel['RoomTypeAvailability'][0]['RoomOptions'][roomOption]['Id']
             self.context.browser.execute_script(
-                f"selectHotelOption('Hot_{hotelOption}_room_{roomOption}_option_{not_combined_room['Id']}','perRoom', false)")
+                f"selectHotelOption('{number_hotel}_room_{roomOption}_option_{selected_room_option}', 'perRoom', false)")
 
-    def obteined_hotel_price(self):
-        hotel_price = self.context.browser.find_elements_by_xpath("//div[@class='price-extra money']//span[@class='currencyText']")
-        price_result_hotel = hotel_price[0].text
-        price_result_hotel_replace = price_result_hotel.replace("$ ", "").replace(".", "")
-        price_hotel_float_results = float(price_result_hotel_replace)
-        self.context.hotel_price_validation = price_hotel_float_results
-        return self.context.hotel_price_validation
+    def obtained_hotel_price(self, context, hotel_option, room_option):
+        WebDriverWait(self.context.browser, 120)\
+            .until(EC.element_to_be_clickable((By.XPATH,
+                                                     "//div[@class='roomOptPrice text-right large-text-right']//span[@class='currencyText']")))
+        view_price = self.context.browser.find_elements(By.XPATH,
+                                                        "//div[@class='roomOptPrice text-right large-text-right']//span[@class='currencyText']")
+
+        convert_price_hotel = view_price[room_option].text
+        convert_price_hotel = convert_price_hotel.replace('.', '')
+        convert_price_hotel = convert_price_hotel.replace('$ ', '')
+        convert_price_hotel = (float(convert_price_hotel))
+
+        hotel_result = self.context.browser.execute_script('return $HotelResults')
+        context.validate_bundled = len(hotel_result[hotel_option]['CombinedRoomTypeAvailability'])
+
+        context.flow_occupancy = self.context.occupancy
+        if context.validate_bundled > 0:
+            context.price_obtained_in_hotel_result_page = convert_price_hotel
+        else:
+            hotel_result = self.context.browser.execute_script('return $HotelResults')
+            print(hotel_result)
+            context.validate_no_bundled = len(hotel_result[hotel_option]['RoomTypeAvailability'])
+            if context.validate_no_bundled == 2:
+                context.price_second = hotel_result[hotel_option]['RoomTypeAvailability'][1]['RoomOptions'][0]['Amount']
+                context.price_obtained_in_hotel_result_page = (convert_price_hotel + context.price_second)
+
+            else:
+                context.price_obtained_in_hotel_result_page = convert_price_hotel
+
+        return context.price_obtained_in_hotel_result_page
 
