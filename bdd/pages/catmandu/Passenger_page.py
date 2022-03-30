@@ -8,6 +8,7 @@ import datetime
 
 
 class Passenger_page(BasePage):
+    print("este print es de victor")
     PASSENGER_TITLE = "Travelers_{index}__Title"
     PASSENGER_NAME = "Travelers_{index}__FirstName"
     PASSENGER_LAST_NAME = "Travelers_{index}__LastName"
