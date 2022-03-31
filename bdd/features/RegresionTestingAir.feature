@@ -4,34 +4,54 @@ Feature: Regresion Testing Aéreos
 
   @use.chrome.browser
   @testing.regresiontest.es-CO.amadeus
-    Scenario: Flujo Amadeus 1adt
+  Scenario: Flujo Amadeus 1adt
    Given Hacer búsqueda de aéreo en catmandu OW con la aerolinea AV para ocupación 1ADT saliendo desde BOG con destino MIA con fecha de salida en 110 días
-   Then Esperar que la página de resultados traiga aéreos en catmandú
-   Then Seleccionar la primera opción con upsell
-   Then Esperar que la página de upsell se visualice en catmandu
-   Then Seleccionar la opción "mas costosa" del upsell
-   Then Click en botón seguir
-   Then Esperar la página de pasajeros
-   Then Esperar la validación de precios en página de pasajeros de catmandú
-   Then Llenar formulario de pasajeros
-   Then Click botón continuar en página de pasajeros
-   Then Esperar que se muestre la página de checkout
-   Then Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
-   Then Esperar y dar click en ver itinerario
-   Then Validar que la reserva tenga estado confirmado
-   Then Ingresar a netadmin ambiente testing
-   Then Esperar que se muestre página de login de netadmin
-   Then Ingresar credenciales de login ambiente testing
-   Then Hacer click en el boton ingresar
-   Then Ingresar itinerario en el buscador
-   Then Hacer click en el boton search
-   Then Hacer click en el boton cancelar
+    When Esperar que la página de resultados traiga aéreos en catmandú
+    When Seleccionar la primera opción con upsell
+    When Esperar que la página de upsell se visualice en catmandu
+    When Seleccionar la opción "mas costosa" del upsell
+    When Click en botón seguir
+    When Esperar la página de pasajeros
+    When Esperar la validación de precios en página de pasajeros de catmandú
+    When Llenar formulario de pasajeros
+    Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de air
+    When Click botón continuar en página de pasajeros
+    When Esperar que se muestre la página de checkout
+    When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
+    Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
+    When Esperar y dar click en ver itinerario
+    Then Validar que la reserva tenga estado confirmado
+    When Ingresar a netadmin ambiente testing
+    When Esperar que se muestre página de login de netadmin
+    When Ingresar credenciales de login ambiente testing
+    When Hacer click en el boton ingresar
+    When Esperar que la pagina de Netadmin cargue
+    When Ingresar itinerario y buscarlo en Netadmin
+    When Hacer click en el boton cancelar y validar que el estado quede en cancelado
 
-
-
-   @use.chrome.browser
-  @testing.regresiontest.es-CO.amadeus
-    Scenario: Flujo Amadeus 2adt 1chd
-   Given Hacer búsqueda de aéreo en catmandu RT con la aerolinea AV para ocupación 2ADT 1 CHD saliendo desde BOG con destino MIA con fecha de salida en 110 días
-   Then Esperar que la página de resultados traiga aéreos en catmandú
-   Then Seleccionar la primera opción con upsell
+  @use.chrome.browser
+  @testing.regresiontest.es-CO.amadeusp2p
+  Scenario: Reserva de vuelo RT con AV con Amadeus con upsell preincluido crosselling seleccion de silla y asistencia
+   Given Hacer búsqueda de vuelo RT en la aerolínea AV en catmandu para 1ADT saliendo de BOG con destino MIA con fecha de checkin en 104 dias y checkout en 106 dias
+    When Esperar que la página de resultados traiga vuelos en catmandú
+    When Seleccionar la opción de vuelo que tenga habilitado upsell de la página de resultados de catmandú
+    When Esperar a que se muestre la página de detalles de vuelo en catmandú
+    When Seleccionar la opción "mas costosa" del upsell
+    When Click en botón seguir
+    When Esperar la página de pasajeros
+    When Esperar la validación de precios en página de pasajeros de catmandú
+    When Llenar formulario de pasajeros
+    Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de airF
+    When Click botón continuar en página de pasajeros
+    When Esperar que se muestre la página de checkout
+    When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
+    Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
+    When Esperar y dar click en ver itinerario
+    Then Validar que la reserva tenga estado confirmado
+    When Ingresar a netadmin ambiente testing
+    When Esperar que se muestre página de login de netadmin
+    When Ingresar credenciales de login ambiente testing
+    When Hacer click en el boton ingresar
+    When Esperar que la pagina de Netadmin cargue
+    When Ingresar itinerario y buscarlo en Netadmin
+    When Hacer click en el boton cancelar y validar que el estado quede en cancelado
