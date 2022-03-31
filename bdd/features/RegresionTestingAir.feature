@@ -26,3 +26,12 @@ Feature: Regresion Testing Aéreos
    Then Ingresar itinerario en el buscador
    Then Hacer click en el boton search
    Then Hacer click en el boton cancelar
+
+
+
+   @use.chrome.browser
+  @testing.regresiontest.es-CO.amadeus
+    Scenario: Flujo Amadeus 2adt 1chd
+   Given Hacer búsqueda de aéreo en catmandu RT con la aerolinea AV para ocupación 2ADT 1 CHD saliendo desde BOG con destino MIA con fecha de salida en 110 días
+   Then Esperar que la página de resultados traiga aéreos en catmandú
+   Then Seleccionar la primera opción con upsell
