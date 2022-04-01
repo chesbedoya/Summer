@@ -40,14 +40,6 @@ class car_result_page(BasePage):
             self.context.browser.execute_script('return $searchData.CarResults')
         self.context.current_product = 'car'
 
-    def obteined_car_price(self):
-        car_price = self.context.browser.find_elements(
-            By.XPATH, "//div[@class='price-extra money']//span[@class='currencyText']")
-        price_result_car = car_price[0].text
-        price_result_car_replace = price_result_car.replace("$ ", "").replace(".", "")
-        price_car_float_results = float(price_result_car_replace)
-        self.context.car_price_options = price_car_float_results
-
     def select_option_car(self, option):
 
         if option == "mas barata":
@@ -98,20 +90,6 @@ class car_result_page(BasePage):
                                                                                               car_rate_id, rate_code,
                                                                                               car_price)
         car_option_select = self.context.browser.execute_script(script)
-
-    def wait_car_product_view(self):
-        WebDriverWait(self.context.browser, 120).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='price-extra money']//span[@class='currencyText']")))
-
-    def select_radio_pay(self):
-        self.context.browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-        pay_now = self.context.browser.find_elements(By.XPATH,
-                                                     "//div[@class='carRatePayNow show-for-large']//input[@name='chkRate']")
-        
-        pay_now_length = len(pay_now)
-        if pay_now_length == 0:
-            pass
-        else:
-            pay_now[0].click()
 
     def continue_button_click(self):
         script = 'return VehicleController.selectCarRate()'

@@ -7,8 +7,8 @@ Feature: RegresiónTest Extras
     When Esperar que la página de resultados traiga extras en catmandú
     When Seleccionar la opción de extra 3 de la página de resultados de extras de catmandú
     When Esperar que la pagina de extras de catmandu cargue en su totalidad
-    When Ingresar cantidad mínima de pasajeros en la pagina de productos de extras de catmandu
-    When Hacer click en el boton comprar ahora de la pagina de productos de extras de catmandu
+    When Ingresar cantidad mínima de pasajeros en la pagina detalles de extras de catmandu
+    When Hacer click en el boton comprar ahora de la pagina detalles de extras de catmandu
     When Esperar a que se muestre la pagina de pasajeros en catmandú
     When Llenar formulario de pasajero de extras en la página de pasajeros de catmandú
     Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras
@@ -33,9 +33,9 @@ Feature: RegresiónTest Extras
     Given Hacer búsqueda de extras en BOG con fecha desde en 68 días y fecha hasta en 70 días y ocupacion 1RE
     When Esperar que la página de resultados traiga extras en catmandú
     When Seleccionar la opción de extra 3 de la página de resultados de extras de catmandú
-    When Esperar que la pagina de productos de catmandu cargue en su totalidad
-    When Ingresar cantidad mínima de pasajeros en la pagina de productos de extras de catmandu
-    When Hacer click en el boton comprar ahora de la pagina de productos de extras de catmandu
+    When Esperar que la pagina de extras de catmandu cargue en su totalidad
+    When Ingresar cantidad mínima de pasajeros en la pagina detalles de extras de catmandu
+    When Hacer click en el boton comprar ahora de la pagina detalles de extras de catmandu
     When Esperar a que se muestre la pagina de pasajeros en catmandú
     When Llenar formulario de pasajero de extras en la página de pasajeros de catmandú
     Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras
@@ -60,9 +60,9 @@ Feature: RegresiónTest Extras
     Given Hacer búsqueda de extras en MAD con fecha desde en 90 días y fecha hasta en 92 días y ocupacion 1RE
     When Esperar que la página de resultados traiga extras en catmandú
     When Seleccionar la opción de extra 4 de la página de resultados de extras de catmandú
-    When Esperar que la pagina de productos de catmandu cargue en su totalidad
-    When Ingresar cantidad mínima de pasajeros en la pagina de productos de extras de catmandu
-    When Hacer click en el boton comprar ahora de la pagina de productos de extras de catmandu
+    When Esperar que la pagina de extras de catmandu cargue en su totalidad
+    When Ingresar cantidad mínima de pasajeros en la pagina detalles de extras de catmandu
+    When Hacer click en el boton comprar ahora de la pagina detalles de extras de catmandu
     When Esperar a que se muestre la pagina de pasajeros en catmandú
     When Llenar formulario de pasajero de extras en la página de pasajeros de catmandú
     Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de extras

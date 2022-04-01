@@ -41,6 +41,14 @@ def before_tag(context, tag):
         use_fixture(init_environment, context, environment='testing', userService='regresiontest', language='es-CO',
                     sucursal='amadeusp2p')
 
+    if tag == "testing.regresiontest.es-CO.amdexchange":
+        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
+                    sucursal="amdexchange")
+
+    if tag == "testing.regresiontest.es-CO.amadeus_cabin":
+        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
+                    sucursal="amd_cabine")
+
     if tag == "testing.regresiontest.es-CO.ApitudeExt":
         use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
                     sucursal="apitude_ex")

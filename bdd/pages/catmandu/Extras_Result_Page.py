@@ -39,17 +39,6 @@ class extras_result_page(BasePage):
             .until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "hotel-image")))
         self.context.current_product = 'extra'
 
-
-    def obteined_extras_price(self):
-        WebDriverWait(self.context.browser, 120) \
-            .until(EC.visibility_of_element_located((By.XPATH,"//div[@class='reprice header']//div[@class='currencyText price-extra money']//span[@class='currencyText']")))
-        extras_price = self.context.browser.find_elements_by_xpath("//div[@class='reprice header']//div[@class='currencyText price-extra money']//span[@class='currencyText']")
-        price_result_extras = extras_price[0].text
-        price_result_extras_replace = price_result_extras.replace("$ ", "").replace(".", "")
-        price_extras_float_results = float(price_result_extras_replace)
-        self.context.extras_price_options = price_extras_float_results
-        return self.context.extras_price_options
-
     def select_option_extra(self, option):
         option = option - 1
         try:
@@ -68,15 +57,3 @@ class extras_result_page(BasePage):
     def wait_extra_results_crosselling(self):
         element = WebDriverWait(self.context.browser, 120) \
             .until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "hotel-image")))
-
-    def wait_product_view(self):
-        WebDriverWait(self.context.browser, 120).until(EC.visibility_of_element_located((By.ID, 'btnPurchase_1')))
-
-    def load_quantity_person(self):
-        WebDriverWait(self.context.browser, 30).until(
-            EC.visibility_of_element_located((By.ID, 'ddl_Prod_0')))
-        Select(self.context.browser.find_element_by_id('ddl_Prod_0')).select_by_value("1")
-
-    def click_button_purchase(self):
-        self.context.browser.execute_script(
-            "return purchaseItems(false, 1, true)")

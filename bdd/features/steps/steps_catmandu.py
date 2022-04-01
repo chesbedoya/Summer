@@ -1,6 +1,9 @@
 import time
 from behave import *
+
+from bdd.pages.catmandu.Car_Details import car_detail_page
 from bdd.pages.catmandu.Car_Result_Page import car_result_page
+from bdd.pages.catmandu.Extras_Details import extras_details_page
 from bdd.pages.catmandu.Extras_Result_Page import extras_result_page
 from bdd.pages.catmandu.Hotel_Result_Page import hotel_result_page
 from bdd.pages.catmandu.Air_Result_Page import air_result_page
@@ -120,7 +123,7 @@ def step_impl(context):
 
 @When('Esperar que la pagina de productos de catmandu cargue en su totalidad')
 def step_impl(context):
-    page = extras_result_page(context)
+    page = extras_details_page(context)
     page.wait_product_view()
 
 @When('Hacer click en el boton comprar ahora de la pagina de aereos con crosselling de catmandu')
@@ -184,6 +187,7 @@ def step_impl(context):
     page.wait_for_upsell_options()
     context.currentPage = page
 
+
 @given("Hacer búsqueda de extras en {extra_city_from:w} con fecha desde en {extra_start_future_days:d}"
        " días y fecha hasta en {extra_end_future_days:d} días y ocupacion {occupancy:w}")
 def step_impl(context, extra_city_from, extra_start_future_days, extra_end_future_days, occupancy):
@@ -205,19 +209,21 @@ def step_impl(context, option):
 
 @When('Esperar que la pagina de extras de catmandu cargue en su totalidad')
 def step_impl(context):
-    context.current_page.wait_product_view()
-    context.current_page.obteined_extras_price()
+    page = extras_details_page(context)
+    page.wait_product_view()
+    page.obteined_extras_price()
 
 
-@When('Ingresar cantidad mínima de pasajeros en la pagina de productos de extras de catmandu')
+@When('Ingresar cantidad mínima de pasajeros en la pagina detalles de extras de catmandu')
 def step_impl(context):
-    context.current_page.load_quantity_person()
+    page = extras_details_page(context)
+    page.load_quantity_person()
 
 
-@When("Hacer click en el boton comprar ahora de la pagina de productos de extras de catmandu")
+@When("Hacer click en el boton comprar ahora de la pagina detalles de extras de catmandu")
 def step_impl(context):
-    context.current_page.click_button_purchase()
-
+    page = extras_details_page(context)
+    page.click_button_purchase()
 
 @When("Esperar a que se muestre la pagina de pasajeros en catmandú")
 def step_impl(context):
@@ -262,17 +268,20 @@ def step_impl(context, option):
 
 @When('Esperar a que se muestre la página de detalles de auto en catmandú')
 def step_impl(context):
-    context.current_page.wait_car_product_view()
+    page = car_detail_page(context)
+    page.wait_car_product_view()
 
 @When('Hacer click en la opcion del radio button pagar ahora de la pagina de detalle en catmandu')
 def step_impl(context):
-    context.current_page.select_radio_pay()
-    context.current_page.obteined_car_price()
+    page = car_detail_page(context)
+    page.select_radio_pay()
+    page.wait_fot_processing()
 
-
-@When('Continuar de la pagina de detalles de auto de catmandu a la pagina de pago')
+@When('Continuar de la pagina de detalles de auto de catmandu a la pagina de pasajeros')
 def step_impl(context):
-    context.current_page.continue_button_click()
+    page = car_detail_page(context)
+    page.obteined_car_price()
+    page.continue_button_click()
 
 @When("Llenar formulario de conductor en la página de pasajeros de catmandú")
 def step_impl(context):

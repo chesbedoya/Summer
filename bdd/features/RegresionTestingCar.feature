@@ -8,7 +8,7 @@ Feature: RegresiónTest Car
     When Seleccionar la opción de auto 3 de la página de resultados de catmandú
     When Esperar a que se muestre la página de detalles de auto en catmandú
     When Hacer click en la opcion del radio button pagar ahora de la pagina de detalle en catmandu
-    When Continuar de la pagina de detalles de auto de catmandu a la pagina de pago
+    When Continuar de la pagina de detalles de auto de catmandu a la pagina de pasajeros
     When Esperar a que se muestre la pagina de pasajeros en catmandú
     When Llenar formulario de conductor en la página de pasajeros de catmandú
     Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de car
@@ -35,7 +35,7 @@ Feature: RegresiónTest Car
     When Seleccionar la opción de auto 2 de la página de resultados de catmandú
     When Esperar a que se muestre la página de detalles de auto en catmandú
     When Hacer click en la opcion del radio button pagar ahora de la pagina de detalle en catmandu
-    When Continuar de la pagina de detalles de auto de catmandu a la pagina de pago
+    When Continuar de la pagina de detalles de auto de catmandu a la pagina de pasajeros
     When Esperar a que se muestre la pagina de pasajeros en catmandú
     When Llenar formulario de conductor en la página de pasajeros de catmandú
     Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de car

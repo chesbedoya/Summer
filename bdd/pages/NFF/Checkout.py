@@ -6,13 +6,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from bdd.Mockaroo.Mockaroo_request import Mockaroo_request
 from selenium.webdriver.support.ui import Select
 from bdd.Extensions.behave_extensions import behave_extensions
-#from selenium.common.exceptions import TimeoutException
+
+
+# from selenium.common.exceptions import TimeoutException
 
 class Checkout(BasePage):
     payment_button = (By.CLASS_NAME, "divPaymentButtons")
     click_button_tdc = (By.CSS_SELECTOR, "[id$=_lblCCTitle]")
     input_tokenex = (By.ID, 'data')
-    month_credit_number =\
+    month_credit_number = \
         'ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl01_ddlCardExpireMonth'
     ID_YEAR = "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl01_ddlCardExpireYear"
     id_first_name_credit_card = (By.CSS_SELECTOR, "[id$=_txtShopperFirstName]")
@@ -34,14 +36,16 @@ class Checkout(BasePage):
 
     def obteined_checkout_price(self):
         WebDriverWait(self.context.browser, 30) \
-            .until(EC.presence_of_element_located((By.ID, "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl05_lblTotalAmount")))
+            .until(EC.presence_of_element_located(
+            (By.ID, "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl05_lblTotalAmount")))
 
         checkout_price = self.context.browser.find_elements_by_id(
-                "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl05_lblTotalAmount")
-        price_result_checkout =checkout_price[0].text
+            "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl05_lblTotalAmount")
+        price_result_checkout = checkout_price[0].text
         price_result_checkout_replace = price_result_checkout.replace("COP ", "").replace(".", "")
         price_checkout_float_results = float(price_result_checkout_replace)
         self.context.checkout_price_validation = price_checkout_float_results
+        return self.context.checkout_price_validation
 
     def validation_price_checkout(self):
         assert self.context.passenger_price_validation == self.context.checkout_price_validation
@@ -83,20 +87,24 @@ class Checkout(BasePage):
     def fill_month_credit_number(self, payment_data):
         element = WebDriverWait(self.context.browser, 30).until(
             EC.element_to_be_clickable((By.ID, self.month_credit_number)))
-        Select(self.context.browser.find_element_by_id(self.month_credit_number)).select_by_visible_text(payment_data['CreditCardValidMonth'])
+        Select(self.context.browser.find_element_by_id(self.month_credit_number)).select_by_visible_text(
+            payment_data['CreditCardValidMonth'])
 
     def fill_year_valid(self, payment_data):
         ele = WebDriverWait(self.context.browser, 20).until(
             EC.element_to_be_clickable((By.ID, self.ID_YEAR)))
-        Select(self.context.browser.find_element_by_id(self.ID_YEAR)).select_by_visible_text(payment_data['CreditCardValidYear'])
+        Select(self.context.browser.find_element_by_id(self.ID_YEAR)).select_by_visible_text(
+            payment_data['CreditCardValidYear'])
 
     def wait_disappear_popup_message_payment(self):
         try:
-            WebDriverWait(self.context.browser, 30)\
-                .until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'blockUI blockMsg blockPage')]")))
+            WebDriverWait(self.context.browser, 30) \
+                .until(
+                EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'blockUI blockMsg blockPage')]")))
 
-            WebDriverWait(self.context.browser, 60)\
-                .until_not(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'blockUI blockMsg blockPage')]")))
+            WebDriverWait(self.context.browser, 60) \
+                .until_not(
+                EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'blockUI blockMsg blockPage')]")))
 
         except TimeoutException:
             pass

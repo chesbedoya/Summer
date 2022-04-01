@@ -67,6 +67,49 @@ class air_result_page(BasePage):
             occupancy = '1/1/1'
         return occupancy
 
+    def search_air_code_line_cabin(self, airTripType, passengersCombination, airCityFrom, airCityTo,
+                                   airDepartureFutureDays, airReturnFutureDays, airLineCode, typeCabin):
+        occupancy = self.translate_combination(passengersCombination)
+        departureDate = datetime.datetime.now() + datetime.timedelta(days=airDepartureFutureDays)
+        returnDate = None if airReturnFutureDays is None else datetime.datetime.now() + \
+                                                              datetime.timedelta(days=airReturnFutureDays)
+        suc = None if self.context.sucursal is None else self.context.sucursal
+        if airTripType.lower() == "rt" and returnDate:
+            url = "{}/{}/Air/{}/{}/{}/{}/{}/{}/NA/{}/NA/{}/NA/false/false/{}-" \
+                .format(self.context.base_url,
+                        self.context.language,
+                        airTripType,
+                        airCityFrom,
+                        airCityTo,
+                        departureDate.strftime("%Y-%m-%d"),
+                        returnDate.strftime("%Y-%m-%d"),
+                        occupancy,
+                        "NA" if airLineCode is None else airLineCode,
+                        "NA" if typeCabin is None else typeCabin,
+                        self.context.userservice
+                        )
+        elif airTripType.lower() == "ow" and returnDate is None:
+            url = "{}/{}/Air/{}/{}/{}/{}/{}/NA/{}/NA/{}/NA/false/false/{}-" \
+                .format(self.context.base_url,
+                        self.context.language,
+                        airTripType,
+                        airCityFrom,
+                        airCityTo,
+                        departureDate.strftime("%Y-%m-%d"),
+                        occupancy,
+                        "NA" if airLineCode is None else airLineCode,
+                        "NA" if typeCabin is None else typeCabin,
+                        self.context.userservice
+                        )
+        else:
+            raise NotImplementedError('Could not launch URL')
+
+        url = url if suc is None else f"{url}-{suc}"
+        self.context.url_search = url
+        self.context.air_return_date_change = returnDate
+        self.context.type_air_cabin = typeCabin
+        self.context.type_code_line = airLineCode
+        self.context.browser.get(url)
 
     def wait_results_air(self):
         element = WebDriverWait(self.context.browser, 120).until(EC.element_to_be_clickable

@@ -41,7 +41,7 @@ Feature: Regresion Testing Aéreos
     When Esperar la página de pasajeros
     When Esperar la validación de precios en página de pasajeros de catmandú
     When Llenar formulario de pasajeros
-    Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de airF
+    Then Validar que el precio de pagina de resultados sea igual al precio de pagina de pasajeros en el flujo de air
     When Click botón continuar en página de pasajeros
     When Esperar que se muestre la página de checkout
     When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
