@@ -57,6 +57,14 @@ def before_tag(context, tag):
         use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
                     sucursal="omnitours")
 
+    if tag == "testing.regresiontest.es-CO.Omnibees":
+        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
+                    sucursal="omnibees")
+
+    if tag == "testing.regresiontest.es-CO.ResTel":
+        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
+                    sucursal="restel")
+
     if tag == "testing.regresiontest.es-CO.Civitatis":
         use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
                     sucursal="civitatis")

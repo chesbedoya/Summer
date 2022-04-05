@@ -55,3 +55,18 @@ def step_imp(context):
     context.current_page.cancel_message_itinerary()
     context.current_page.validation_cancel_itinerary()
 
+@When("Desplegar el menu de opciones y cancelar la reserva")
+def step_imp(context):
+    page = Netadmin_page(context)
+    ext = behave_extensions(context)
+    ext.iframe_tab_netadmin()
+    ext.iframe_display()
+    context.current_page.wait_page_travelitinerary()
+    context.current_page.deploy_actions()
+    context.current_page.click_action_cancel()
+
+@Then("Validar que el estado quede en cancelado")
+def step_imp(context):
+    context.current_page.cancel_message_itinerary()
+    context.current_page.validation_cancel_itinerary()
+

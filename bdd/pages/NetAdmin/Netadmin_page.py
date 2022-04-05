@@ -1,3 +1,5 @@
+import time
+
 from selenium.common.exceptions import TimeoutException
 from bdd.pages.BasePage import BasePage
 from selenium.webdriver.common.by import By
@@ -87,6 +89,23 @@ class Netadmin_page(BasePage):
     def wait_button_comments(self):
         WebDriverWait(self.context.browser, 80).until(
             EC.element_to_be_clickable(self.NFF_WAIT_ITINERARY))
+
+    def wait_page_travelitinerary(self):
+        WebDriverWait(self.context.browser, 80).until(
+            EC.presence_of_element_located((By.ID, "TravelItinerary")))
+        time.sleep(5)
+
+    def deploy_actions(self):
+        WebDriverWait(self.context.browser, 20).until(
+            EC.element_to_be_clickable((By.XPATH, "//tr/td/nobr"))).click()
+
+    def click_action_cancel(self):
+        WebDriverWait(self.context.browser, 20).until(
+            EC.element_to_be_clickable((By.XPATH, "//table/tbody/tr/td/nobr"))).click()
+
+
+
+
 
 
 

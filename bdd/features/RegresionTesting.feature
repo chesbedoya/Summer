@@ -37,6 +37,31 @@ Feature: Regresion Testing Hoteles
     When Esperar la página de pasajeros
     When Esperar la validación de precios en página de pasajeros de catmandú
     When Llenar formulario de pasajeros
+    #Then Validar que el precio en la pagina de hoteles sea el mismo precio que en pagina de pasajeros
+    When Click botón continuar en página de pasajeros
+    When Esperar que se muestre la página de checkout
+    When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
+    #Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
+    When Esperar y dar click en ver itinerario
+    Then Validar que la reserva tenga estado confirmado
+    When Ingresar a netadmin ambiente testing
+    When Esperar que se muestre página de login de netadmin
+    When Ingresar credenciales de login ambiente testing
+    When Hacer click en el boton ingresar
+    When Esperar que la pagina de Netadmin cargue
+    When Ingresar itinerario y buscarlo en Netadmin
+    When Hacer click en el boton cancelar y validar que el estado quede en cancelado
+
+  @use.chrome.browser
+  @testing.regresiontest.es-CO.Omnibees
+  Scenario: Flujo Omnibees 1r1a
+   Given Hacer búsqueda de hoteles en catmandu para ocupación 1R1A para destino iata MIA con fecha de checkin en 118 días y checkout en 120 días
+    When Esperar que la página de resultados traiga hoteles en catmandú
+    When Quitar filtro de solo hoteles con imagenes
+    When Seleccionar la opción 1 del hotel 1 de la página de resultados de catmandú
+    When Esperar la página de pasajeros
+    When Esperar la validación de precios en página de pasajeros de catmandú
+    When Llenar formulario de pasajeros
     Then Validar que el precio en la pagina de hoteles sea el mismo precio que en pagina de pasajeros
     When Click botón continuar en página de pasajeros
     When Esperar que se muestre la página de checkout
@@ -50,6 +75,85 @@ Feature: Regresion Testing Hoteles
     When Hacer click en el boton ingresar
     When Esperar que la pagina de Netadmin cargue
     When Ingresar itinerario y buscarlo en Netadmin
-    When Hacer click en el boton cancelar y validar que el estado quede en cancelado
+    When Desplegar el menu de opciones y cancelar la reserva
+    Then Validar que el estado quede en cancelado
 
 
+  @use.chrome.browser
+  @testing.regresiontest.es-CO.Omnibees
+  Scenario: Flujo Omnibees 2r4a1c1i
+   Given Hacer búsqueda de hoteles en catmandu para ocupación 2R4A1C1I para destino iata MIA con fecha de checkin en 105 días y checkout en 107 días
+    When Esperar que la página de resultados traiga hoteles en catmandú
+    When Quitar filtro de solo hoteles con imagenes
+    When Seleccionar la opción 1 del hotel 1 de la página de resultados de catmandú
+    When Esperar la página de pasajeros
+    When Esperar la validación de precios en página de pasajeros de catmandú
+    When Llenar formulario de pasajeros
+    Then Validar que el precio en la pagina de hoteles sea el mismo precio que en pagina de pasajeros
+    When Click botón continuar en página de pasajeros
+    When Esperar que se muestre la página de checkout
+    When Realizar pago con método de pago "Linea de Credito" en página de checkout
+    Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
+    When Esperar y dar click en ver itinerario
+    Then Validar que la reserva tenga estado confirmado
+    When Ingresar a netadmin ambiente testing
+    When Esperar que se muestre página de login de netadmin
+    When Ingresar credenciales de login ambiente testing
+    When Hacer click en el boton ingresar
+    When Esperar que la pagina de Netadmin cargue
+    When Ingresar itinerario y buscarlo en Netadmin
+    When Desplegar el menu de opciones y cancelar la reserva
+    Then Validar que el estado quede en cancelado
+
+  @use.chrome.browser
+  @testing.regresiontest.es-CO.ResTel
+  Scenario: Flujo ResTel 1r1a
+   Given Hacer búsqueda de hoteles en catmandu para ocupación 1R1A para destino iata MV8 con fecha de checkin en 118 días y checkout en 120 días
+    When Esperar que la página de resultados traiga hoteles en catmandú
+    When Quitar filtro de solo hoteles con imagenes
+    When Seleccionar la opción 1 del hotel 1 de la página de resultados de catmandú
+    When Esperar la página de pasajeros
+    When Esperar la validación de precios en página de pasajeros de catmandú
+    When Llenar formulario de pasajeros
+    Then Validar que el precio en la pagina de hoteles sea el mismo precio que en pagina de pasajeros
+    When Click botón continuar en página de pasajeros
+    When Esperar que se muestre la página de checkout
+    When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
+    Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
+    When Esperar y dar click en ver itinerario
+    Then Validar que la reserva tenga estado confirmado
+    When Ingresar a netadmin ambiente testing
+    When Esperar que se muestre página de login de netadmin
+    When Ingresar credenciales de login ambiente testing
+    When Hacer click en el boton ingresar
+    When Esperar que la pagina de Netadmin cargue
+    When Ingresar itinerario y buscarlo en Netadmin
+    When Desplegar el menu de opciones y cancelar la reserva
+    Then Validar que el estado quede en cancelado
+
+
+  @use.chrome.browser
+  @testing.regresiontest.es-CO.ResTel
+  Scenario: Flujo Restel 2r4a1c
+   Given Hacer búsqueda de hoteles en catmandu para ocupación 2R4A1C para destino iata MV8 con fecha de checkin en 118 días y checkout en 120 días
+    When Esperar que la página de resultados traiga hoteles en catmandú
+    When Quitar filtro de solo hoteles con imagenes
+    When Seleccionar la opción 1 del hotel 1 de la página de resultados de catmandú
+    When Esperar la página de pasajeros
+    When Esperar la validación de precios en página de pasajeros de catmandú
+    When Llenar formulario de pasajeros
+    Then Validar que el precio en la pagina de hoteles sea el mismo precio que en pagina de pasajeros
+    When Click botón continuar en página de pasajeros
+    When Esperar que se muestre la página de checkout
+    When Realizar pago con método de pago "Tarjeta de crédito" en página de checkout
+    Then Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout
+    When Esperar y dar click en ver itinerario
+    Then Validar que la reserva tenga estado confirmado
+    When Ingresar a netadmin ambiente testing
+    When Esperar que se muestre página de login de netadmin
+    When Ingresar credenciales de login ambiente testing
+    When Hacer click en el boton ingresar
+    When Esperar que la pagina de Netadmin cargue
+    When Ingresar itinerario y buscarlo en Netadmin
+    When Desplegar el menu de opciones y cancelar la reserva
+    Then Validar que el estado quede en cancelado

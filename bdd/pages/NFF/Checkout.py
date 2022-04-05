@@ -13,6 +13,7 @@ from bdd.Extensions.behave_extensions import behave_extensions
 class Checkout(BasePage):
     payment_button = (By.CLASS_NAME, "divPaymentButtons")
     click_button_tdc = (By.CSS_SELECTOR, "[id$=_lblCCTitle]")
+    click_button_pea = (By.ID, "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_lblCashTitle")
     input_tokenex = (By.ID, 'data')
     month_credit_number = \
         'ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_ctl01_ddlCardExpireMonth'
@@ -26,6 +27,10 @@ class Checkout(BasePage):
     id_gender_shopper = (By.CSS_SELECTOR, "[id$=ddlGender]")
     id_street_shopper = (By.CSS_SELECTOR, "[id$=txtStreet]")
     id_click_button_payment = (By.CSS_SELECTOR, "[id$=btnPaymentMethodCC]")
+    id_click_button_payment_cash = (By.CSS_SELECTOR, "[id$=btnPaymentMethodCash]")
+    id_click_button_payment_loc = (By.CSS_SELECTOR, "[id$=btnPaymentMethodLOC]")
+
+    click_button_ldc = (By.ID , "ctl00_ctl00_NetSiteContentPlaceHolder_NetFulfillmentContentPlaceHolder_lblLOCTitle")
 
     def __init__(self, context):
         BasePage.__init__(self, context)
@@ -54,6 +59,17 @@ class Checkout(BasePage):
         WebDriverWait(self.context.browser, 60).until(
             EC.element_to_be_clickable(self.click_button_tdc)).click()
 
+    def click_agency_payment_form(self):
+        WebDriverWait(self.context.browser, 60).until(
+            EC.element_to_be_clickable(self.click_button_pea)).click()
+
+    def click_credit_line_form(self):
+            WebDriverWait(self.context.browser, 60).until(
+                EC.element_to_be_clickable(self.click_button_ldc)).click()
+
+
+
+
     def fill_credit_card(self, context):
         mockaroo = Mockaroo_request()
         payment_data = mockaroo.get_payment_data()
@@ -78,6 +94,12 @@ class Checkout(BasePage):
             self.fill_phone_number_shopper(payment_data)
             self.fill_address_shopper(payment_data)
             self.choose_gender_shopper(payment_data)
+
+    def fill_agency_payment(self, context):
+        mockaroo = Mockaroo_request()
+        payment_data = mockaroo.get_payment_data()
+        self.choose_gender_shopper(payment_data)
+
 
     def fill_credit_number(self, payment_data):
         element = WebDriverWait(self.context.browser, 60).until(
@@ -183,3 +205,11 @@ class Checkout(BasePage):
     def click_button_payment(self):
         ele = WebDriverWait(self.context.browser, 20). \
             until(EC.element_to_be_clickable(self.id_click_button_payment)).click()
+
+    def click_button_payment_cash(self):
+        ele = WebDriverWait(self.context.browser, 20). \
+            until(EC.element_to_be_clickable(self.id_click_button_payment_cash)).click()
+
+    def click_button_payment_LOC(self):
+        ele = WebDriverWait(self.context.browser, 20). \
+            until(EC.element_to_be_clickable(self.id_click_button_payment_loc)).click()

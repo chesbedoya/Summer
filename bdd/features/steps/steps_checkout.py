@@ -16,12 +16,25 @@ def step_impl(context, payment_form):
         context.currentPage.click_credit_card_payment_form()
         context.currentPage.fill_credit_card(context)
         context.currentPage.fill_geography_information()
+        context.currentPage.obteined_checkout_price()
         context.currentPage.click_button_payment()
+    elif payment_form.lower() == 'pago en agencia':
+        context.currentPage.click_agency_payment_form()
+        context.currentPage.fill_agency_payment(context)
+        context.currentPage.fill_geography_information()
+        context.currentPage.obteined_checkout_price()
+        context.currentPage.click_button_payment_cash()
+    elif payment_form.lower() == 'linea de credito':
+        context.currentPage.click_credit_line_form()
+        context.currentPage.fill_agency_payment(context)
+        context.currentPage.fill_geography_information()
+        context.currentPage.obteined_checkout_price()
+        context.currentPage.click_button_payment_LOC()
+
 
 
 @Then("Validar que el precio en pagina de pasajeros sea el mismo precio que en pagina de checkout")
 def step_impl(context):
-    context.currentPage.obteined_checkout_price()
     context.currentPage.validation_price_checkout()
 
 
