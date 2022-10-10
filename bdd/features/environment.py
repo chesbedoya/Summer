@@ -1,6 +1,9 @@
 from behave import use_fixture
 from bdd.fixtures.fixtures import *
 from behave.model import Scenario
+from bdd.Helpers.report_automation import prueba
+from bdd.Helpers.jesikeiron_dic import var
+
 
 
 def close_browser(context):
@@ -14,70 +17,40 @@ def after_scenario(context, scenario):
     close_browser(context)
 
 
+def after_step(context, step):
+    suripanto = prueba(context=context, step=step)
+    print(suripanto)
+
+
+def tag_in_list(list, tag):
+    print(list,tag)
+    for i in range(len(list)):
+      if tag in list[i].values():
+        return True, list[i]
+    return False, {}
+
+
 def before_tag(context, tag):
     if tag == "use.chrome.browser":
         use_fixture(use_chrome_browser, context)
 
+    if tag == "use_appi_chrome_demo":
+        use_fixture(use_appi_chrome_demo, context)
+
     if tag == "close.browser":
         context.close_browser = True
 
-    if tag == "testing.simulacion.es-CO":
-        use_fixture(init_environment, context, environment='testing', userService='simulacion', language='es-CO',
-                    sucursal=None)
+    flag, temp_dict = tag_in_list(var, tag)
+    print(flag, temp_dict)
+    if flag:
+        use_fixture(init_environment, context, environment=temp_dict['environment'],
+                    userService=temp_dict['userService'], language=temp_dict['language'],
+                    sucursal=temp_dict['sucursal'])
 
-    if tag == "testing.palomalo.es-CO":
-        use_fixture(init_environment, context, environment='testing', userService='palomalo', language='es-CO',
-                    sucursal=None)
-
-    if tag == "testing.regresiontest.es-CO.expedia":
-        use_fixture(init_environment, context, environment='testing', userService='regresiontest', language='es-CO',
-                    sucursal='hexp')
-
-    if tag == "testing.regresiontest.es-CO.amadeus":
-        use_fixture(init_environment, context, environment='testing', userService='regresiontest', language='es-CO',
-                    sucursal='amadeus')
-
-    if tag == "testing.regresiontest.es-CO.amadeusp2p":
-        use_fixture(init_environment, context, environment='testing', userService='regresiontest', language='es-CO',
-                    sucursal='amadeusp2p')
-
-    if tag == "testing.regresiontest.es-CO.amdexchange":
-        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="amdexchange")
-
-    if tag == "testing.regresiontest.es-CO.amadeus_cabin":
-        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="amd_cabine")
-
-    if tag == "testing.regresiontest.es-CO.ApitudeExt":
-        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="apitude_ex")
-
-    if tag == "testing.regresiontest.es-CO.Omnitours":
-        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="omnitours")
-
-    if tag == "testing.regresiontest.es-CO.Omnibees":
-        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="omnibees")
-
-    if tag == "testing.regresiontest.es-CO.ResTel":
-        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="restel")
-
-    if tag == "testing.regresiontest.es-CO.Civitatis":
-        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="civitatis")
-
-    if tag == "testing.regresiontest.es-CO.RentingCarz":
-        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="rentingcar")
-
-    if tag == "testing.regresiontest.es-CO.localiza":
-        use_fixture(init_environment, context, environment="testing", userService="regresiontest", language="es-CO",
-                    sucursal="localiza")
 
 def before_all(context):
     user_data = context.config.userdata
+    print(user_data)
     continue_after_failed = user_data.getbool("runner.continue_after_failed_step", False)
+    print(continue_after_failed)
     Scenario.continue_after_failed_step = continue_after_failed
